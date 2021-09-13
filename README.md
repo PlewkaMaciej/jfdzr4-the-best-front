@@ -1,1 +1,1 @@
-#### Getting starting with THE-BEST-FRONT
+#### Getting started with THE-BEST-FRONT

@@ -1,8 +1,8 @@
-import RegisterForm from './RegisterForm';
+import SignUpForm from './SignUpForm';
 
 function App() {
   return (
-    <RegisterForm />      
+    <SignUpForm />      
   );
 }
 

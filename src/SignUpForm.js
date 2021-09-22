@@ -5,6 +5,17 @@ import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from './index';
+
+// komponent odpowiada za zarejestrowanie użytkownika w firebase auth
+// formularz po wykonaniu rejestracji użytkownika czyści zmienną formData
+// pozostaje do ustalenia: 1. gdzie po zarejetrowaniu użytkownik ma być przekierowany 
+// 2.Do zastanowienia się czy nie powinniśmy usatwić globalnego stanu zalogowania bo może on być później potrzebny do warunkowego wyświetlania niektórych elementów na stronie 
+//3. W stanie globalnym wydaje mi się że również powineien znajdować się token
+//4. Formularz ma wyłączoną walidację bo domyślne działanie przeglądarki jest brzydkie ale za to jest obsługa błędu dla każdego pola jeśli jest puste ale dalej nie chroni to przed wpisaniem błednego maila - do dyskusji W sumie to można wykorzystać walidację przez samego firebase auth (okazuje się że on nie przepuści maila bez @)
+//autowypełnianie pól przez przeglądarkę też jest wyłączone
+
 
 const useStyles = makeStyles({
     container: {
@@ -33,7 +44,7 @@ const useStyles = makeStyles({
     }
 })
 
-const RegisterForm = () => {
+const SignUpForm = () => {
 
     const classes = useStyles();
 
@@ -41,19 +52,44 @@ const RegisterForm = () => {
         email: '',
         password: ''
     })
+    const { email, password } = formData;
 
-    const { email, password } = formData
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     const handleChange = e => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log('form submitted', email, password);
+        setEmailError(false);
+        setPasswordError(false);
+        if (email === '') {
+            setEmailError(true);
+        } 
+        if (password === '') {
+            setPasswordError(true);
+        }
+        if (email && password) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    setFormData({
+                    email: '',
+                    password: ''
+                    })
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                });
+        }
     }
 
     return (
@@ -87,10 +123,11 @@ const RegisterForm = () => {
                     fullWidth
                     required
                     className={classes.field}
+                    error={emailError}
                     onChange={handleChange}
                 />
                 <TextField 
-                    label="password"
+                    label="choose password"
                     variant="outlined"
                     color="primary"
                     type='password'
@@ -99,6 +136,7 @@ const RegisterForm = () => {
                     fullWidth
                     required
                     className={classes.field}
+                    error={passwordError}
                     onChange={handleChange}
                 />
                 <Button
@@ -108,11 +146,11 @@ const RegisterForm = () => {
                     endIcon={<SendIcon />} 
                     className={classes.btn} 
                 >
-                    REGISTER
+                    SIGN UP
                 </Button>
             </form>
         </Container>
     );
 }
 
-export default RegisterForm;
+export default SignUpForm;

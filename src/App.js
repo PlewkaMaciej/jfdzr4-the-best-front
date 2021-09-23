@@ -1,8 +1,12 @@
 import SignUpForm from './SignUpForm';
+import SignInForm from './SignInForm';
 
 function App() {
   return (
-    <SignUpForm />      
+    <>
+    <SignUpForm /> 
+    <SignInForm />     
+    </>
   );
 }
 

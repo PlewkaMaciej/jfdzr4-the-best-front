@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,7 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { makeStyles } from '@mui/styles';
-import img from '../rowerem i pieszo przez czarny ląd.png';
+import { storage } from './../index';
+import { ref, getDownloadURL } from 'firebase/storage';
 
 const useStyles = makeStyles({  
     card: {
@@ -26,9 +28,20 @@ const useStyles = makeStyles({
     }
 })
 
-const BookCard = ({title, author, price}) => {
-
+const BookCard = ({title, author, price, id, coverName}) => {
     const classes = useStyles();
+
+    const [imgUrl, setImgUrl] = useState('');
+
+    useEffect(() => {
+        getDownloadURL(ref(storage, `covers/${id}/${coverName}`))
+            .then(url => {
+                setImgUrl(url);
+            })
+            .catch(err => {
+                console.log(err, err.message);
+            });
+    }, [id, coverName]);
 
     return (
 
@@ -40,7 +53,7 @@ const BookCard = ({title, author, price}) => {
                 <CardMedia
                     component="img"
                     height="330"
-                    image={img}
+                    image={imgUrl}
                     alt={title}
                 />
                 <CardContent>

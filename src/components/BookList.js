@@ -5,7 +5,6 @@ import BookCard from './BookCard';
 
 const BookList = () => {
     const [bookCollection, setBookCollection] = useState([]);
-    console.log(bookCollection);
     
     useEffect(() => {
         onSnapshot(collection(db, 'books'), snapshot => {
@@ -18,12 +17,12 @@ const BookList = () => {
     }, [])
 
     return (
-        <ul style={{listStyle: 'none'}}>
+        <main style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
             {bookCollection && 
                 bookCollection.map(book => {
                     return <BookCard key={book.id} {...book} />
                 })}
-        </ul>
+        </main>
     );
 }
 

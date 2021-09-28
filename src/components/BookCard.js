@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     }
 })
 
-const BookCard = ({title, author, price, id, coverName}) => {
+const BookCard = ({title, author, price, id, coverName, description}) => {
     const classes = useStyles();
 
     const [imgUrl, setImgUrl] = useState('');
@@ -45,7 +45,7 @@ const BookCard = ({title, author, price, id, coverName}) => {
 
     return (
 
-        <li style={{maxWidth:'600px', margin: '0 auto', marginTop: '50px'}}>
+        <div style={{maxWidth:'600px', margin: '0 auto', marginTop: '50px'}}>
             <Card 
                 sx={{ maxWidth: 300 }}
                 className={classes.card}
@@ -74,14 +74,14 @@ const BookCard = ({title, author, price, id, coverName}) => {
                     >
                         {author}
                     </Typography>
-                    {/* <Typography
+                    <Typography
                         gutterBottom 
                         variant="body2" 
                         color="text.secondary" 
                         noWrap
                     >
                         {description}
-                    </Typography> */}
+                    </Typography>
                     <Typography 
                         gutterBottom 
                         variant="h6" 
@@ -104,7 +104,7 @@ const BookCard = ({title, author, price, id, coverName}) => {
                     </Button>
                 </CardActions>
             </Card>
-        </li>
+        </div>
     );
 }
  

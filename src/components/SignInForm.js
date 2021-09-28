@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './index';
+import { auth } from './../index';
 
 const useStyles = makeStyles({
     container: {

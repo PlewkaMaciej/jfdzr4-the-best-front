@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from './index';
+import { auth } from './../index';
 
 // komponent odpowiada za zarejestrowanie użytkownika w firebase auth
 // formularz po wykonaniu rejestracji użytkownika czyści zmienną formData

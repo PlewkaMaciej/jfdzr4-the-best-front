@@ -4,8 +4,9 @@ import SignUpForm from "./SignUpForm"
 function App() {
   return (
     <>
-   
-      <SignUpForm/>
+      <CreatePost />
+      <ShowPosts />
+      
     </>
   );
 }

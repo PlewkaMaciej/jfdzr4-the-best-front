@@ -1,7 +1,11 @@
-import CreatePost from "./components/postSection/createPost"
+import CreatePost from "./components/postSection/createPost";
+import ShowPosts from "./components/postSection/showPosts";
 function App() {
   return (
-    <CreatePost/>
+    <>
+      <CreatePost />
+      <ShowPosts />
+    </>
   );
 }
 

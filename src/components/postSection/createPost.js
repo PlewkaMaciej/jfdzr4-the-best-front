@@ -30,10 +30,10 @@ function CreatePost() {
   const classes = useStyles();
   const [modalStatus, setModalStatus] = useState(false);
   const [postData, setPostData] = useState({
-    email: '',
-    password: ''
+    title: '',
+    text: ''
 })
-  const { email, password } = postData;
+  const { title, text } = postData;
 
   const openModal = () => {
     setModalStatus(true);
@@ -43,7 +43,7 @@ function CreatePost() {
   }
   const createPost=(e)=>{
     e.preventDefault()
-    sendDataToFirebase(postData)
+    sendDataToFirebase(postData,setModalStatus)
   }
   const handleChange=(e)=>{
     setPostData({
@@ -66,7 +66,7 @@ function CreatePost() {
                     variant="outlined"
                     color="primary"
                     type="email"
-                    name="email"
+                    name="title"
                     onChange={handleChange}
 
                     fullWidth
@@ -77,7 +77,7 @@ function CreatePost() {
                     variant="outlined"
                     color="primary"
                     type='password'
-                    name="password"
+                    name="text"
                     onChange={handleChange}
                     fullWidth
                     required

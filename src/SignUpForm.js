@@ -63,7 +63,7 @@ const SignUpForm = () => {
             [e.target.name]: e.target.value
         });
     }
-    console.log(auth)
+
     const handleSubmit = e => {
         e.preventDefault();
         setEmailError(false);

@@ -1,8 +1,7 @@
-import SignUpForm from './SignUpForm';
-
+import CreatePost from "./components/postSection/createPost"
 function App() {
   return (
-    <SignUpForm />      
+    <CreatePost/>
   );
 }
 

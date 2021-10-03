@@ -8,10 +8,10 @@ import { getAuth } from "firebase/auth";
 import App from './App';
 
 // Initialize Firebase
+
 export const app = initializeApp(firebaseConfig);
 //firebase auth
 export const auth = getAuth();
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

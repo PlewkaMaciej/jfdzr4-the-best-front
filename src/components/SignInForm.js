@@ -5,17 +5,8 @@ import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from './index';
-
-// komponent odpowiada za zarejestrowanie użytkownika w firebase auth
-// formularz po wykonaniu rejestracji użytkownika czyści zmienną formData
-// pozostaje do ustalenia: 1. gdzie po zarejetrowaniu użytkownik ma być przekierowany 
-// 2.Do zastanowienia się czy nie powinniśmy usatwić globalnego stanu zalogowania bo może on być później potrzebny do warunkowego wyświetlania niektórych elementów na stronie 
-//3. W stanie globalnym wydaje mi się że również powineien znajdować się token
-//4. Formularz ma wyłączoną walidację bo domyślne działanie przeglądarki jest brzydkie ale za to jest obsługa błędu dla każdego pola jeśli jest puste ale dalej nie chroni to przed wpisaniem błednego maila - do dyskusji W sumie to można wykorzystać walidację przez samego firebase auth (okazuje się że on nie przepuści maila bez @)
-//autowypełnianie pól przez przeglądarkę też jest wyłączone
-
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './../index';
 
 const useStyles = makeStyles({
     container: {
@@ -44,7 +35,7 @@ const useStyles = makeStyles({
     }
 })
 
-const SignUpForm = () => {
+const SignInForm = () => {
 
     const classes = useStyles();
 
@@ -75,7 +66,7 @@ const SignUpForm = () => {
             setPasswordError(true);
         }
         if (email && password) {
-            createUserWithEmailAndPassword(auth, email, password)
+            signInWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
                     const user = userCredential.user;
                     console.log(user);
@@ -110,7 +101,7 @@ const SignUpForm = () => {
                     gutterBottom
                     align="center"
                 >
-                    Do not wait register now and join our community!
+                    Sign in and enjoy!
                 </Typography>
                 </div>
                 <TextField 
@@ -146,11 +137,11 @@ const SignUpForm = () => {
                     endIcon={<SendIcon />} 
                     className={classes.btn} 
                 >
-                    SIGN UP
+                    SIGN IN
                 </Button>
             </form>
         </Container>
     );
 }
 
-export default SignUpForm;
+export default SignInForm;

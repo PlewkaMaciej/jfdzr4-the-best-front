@@ -71,15 +71,13 @@ const SignInForm = () => {
         if (email && password) {
             signInWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    const user = userCredential.user;
-                    console.log(user);
                     setFormData({
                     email: '',
                     password: ''
                     });
                     setShouldRedirect(true);
                 })
-                .catch((error) => {
+                .catch(error => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode, errorMessage);

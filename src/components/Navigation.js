@@ -81,14 +81,16 @@ const Navigation = () => {
         <AppBar position="fixed">
             <Toolbar sx={{justifyContent: 'space-between'}}>
                 <LogoWrapper>
-                    <Avatar alt="logo" src={logo} />  
-                    <Typography variant="h6" component={Link} to="/" sx={{
-                            pl: 1,
-                            textDecoration: 'none',
-                            color: '#fff'
-                    }}>
-                        Smart Books
-                    </Typography>
+                    <Avatar alt="logo" src={logo} />
+                    <Link to="/" style={{textDecoration: 'none'}}>  
+                        <Typography variant="h6" component="h2" sx={{
+                                p: 1,
+                                textDecoration: 'none',
+                                color: '#fff'
+                        }}>
+                            Smart Books
+                        </Typography>
+                    </Link>
                 </LogoWrapper>
                 <Search>
                     <SearchIconWrapper>
@@ -142,16 +144,16 @@ const Navigation = () => {
                             >
                                 Account
                             </Button>
-                        :   <Button 
-                                variant="contained"
-                                color="primary"
-                                sx={{mr: 1}}
-                                component={Link}
-                                to="/sing-in"
-                                startIcon={<LoginOutlinedIcon />}
-                            >
-                                Sign in
-                            </Button>  
+                        :   <Link to="/sign-in" style={{textDecoration: 'none'}}>
+                                <Button 
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{mr: 1}}
+                                    startIcon={<LoginOutlinedIcon />}
+                                >
+                                        Sign in
+                                </Button> 
+                            </Link> 
                     }
                     {
                         user
@@ -163,15 +165,15 @@ const Navigation = () => {
                             >
                                 Sign out
                             </Button>
-                        :   <Button 
-                                variant="contained"
-                                color="primary"
-                                component={Link}
-                                to="/sign-up"
-                                startIcon={<PersonAddIcon />}
-                            >
-                                Sign Up
-                            </Button>
+                        :   <Link to="/sign-up" style={{textDecoration: 'none'}}>
+                                <Button 
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<PersonAddIcon />}
+                                >
+                                    Sign Up
+                                </Button>
+                            </Link>
                     }
                 </ButtonsWrapper>
             </Toolbar>

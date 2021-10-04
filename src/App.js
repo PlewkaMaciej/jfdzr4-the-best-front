@@ -1,14 +1,13 @@
-import SignUpForm from './components/SignUpForm';
-import SignInForm from './components/SignInForm';
-import BookList from './components/BookList';
+import Navigation from './components/Navigation';
+import Content from './components/Content';
+import { UserContextProvider } from './controllers/UserContext';
 
 function App() {
   return (
-    <>
-    <BookList />
-    <SignUpForm /> 
-    <SignInForm />     
-    </>
+    <UserContextProvider>
+      <Navigation />
+      <Content />   
+    </UserContextProvider>
   );
 }
 

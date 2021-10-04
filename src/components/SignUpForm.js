@@ -1,21 +1,13 @@
 import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { auth } from './../index';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from './../index';
-
-// komponent odpowiada za zarejestrowanie użytkownika w firebase auth
-// formularz po wykonaniu rejestracji użytkownika czyści zmienną formData
-// pozostaje do ustalenia: 1. gdzie po zarejetrowaniu użytkownik ma być przekierowany 
-// 2.Do zastanowienia się czy nie powinniśmy usatwić globalnego stanu zalogowania bo może on być później potrzebny do warunkowego wyświetlania niektórych elementów na stronie 
-//3. W stanie globalnym wydaje mi się że również powineien znajdować się token
-//4. Formularz ma wyłączoną walidację bo domyślne działanie przeglądarki jest brzydkie ale za to jest obsługa błędu dla każdego pola jeśli jest puste ale dalej nie chroni to przed wpisaniem błednego maila - do dyskusji W sumie to można wykorzystać walidację przez samego firebase auth (okazuje się że on nie przepuści maila bez @)
-//autowypełnianie pól przez przeglądarkę też jest wyłączone
-
 
 const useStyles = makeStyles({
     container: {
@@ -54,6 +46,8 @@ const SignUpForm = () => {
     })
     const { email, password } = formData;
 
+    const [shouldRedirect, setShouldRedirect] = useState(false); 
+
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
@@ -77,19 +71,22 @@ const SignUpForm = () => {
         if (email && password) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    const user = userCredential.user;
-                    console.log(user);
                     setFormData({
                     email: '',
                     password: ''
-                    })
+                    });
+                    setShouldRedirect(true);
                 })
-                .catch((error) => {
+                .catch(error => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode, errorMessage);
                 });
         }
+    }
+
+    if (shouldRedirect) {
+        return <Redirect to="/" />
     }
 
     return (

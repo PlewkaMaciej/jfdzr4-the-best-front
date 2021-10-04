@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './../index';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './../index';
 
 const useStyles = makeStyles({
     container: {
@@ -45,6 +46,8 @@ const SignInForm = () => {
     })
     const { email, password } = formData;
 
+    const [shouldRedirect, setShouldRedirect] = useState(false); 
+
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
@@ -68,19 +71,22 @@ const SignInForm = () => {
         if (email && password) {
             signInWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    const user = userCredential.user;
-                    console.log(user);
                     setFormData({
                     email: '',
                     password: ''
-                    })
+                    });
+                    setShouldRedirect(true);
                 })
-                .catch((error) => {
+                .catch(error => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode, errorMessage);
                 });
         }
+    }
+
+    if (shouldRedirect) {
+        return <Redirect to="/" />
     }
 
     return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './../index';
 import Button from '@mui/material/Button';
@@ -10,29 +10,44 @@ import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 
 const useStyles = makeStyles({
-    container: {
-        padding: '20px 0'
-    },
-    form: {
+    wrapper: {
         maxWidth: 670,
         minHeight: 480,
-        margin: '20px auto',
+        margin: '12% auto',
         padding: '20px 40px',
+        border: '1px solid #FAFAFA',
+        borderRadius: 20,
+        boxShadow: '0 0 10px rgba(0, 0, 0, .1)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        border: '1px solid #FAFAFA',
-        borderRadius: 20,
-        boxShadow: '0 0 10px rgba(0, 0, 0, .1)'
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
     },   
     btn: {
-        marginTop: 20,
+        marginTop: 10,
+        marginBottom: 30,
         width: '25%',
         alignSelf: 'center'
     },
     field: {
         marginTop: 20,
         marginBottom: 20
+    },
+        link: {
+        marginLeft: 15,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 15,
+        paddingRight: 15,
+        textDecoration: 'none',
+        color: '#fff',
+        backgroundColor: '#2196f3',
+        borderRadius: 5,
+        boxShadow: '0 0 2px rgba(0, 0, 0, .1)'
     }
 })
 
@@ -90,62 +105,73 @@ const SignInForm = () => {
     }
 
     return (
-        <Container className={classes.container}>
-            <form noValidate autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
-                <div>
-                <Typography 
-                    variant="h5"
-                    component="h2"
-                    gutterBottom
-                    align="center"
-                >
-                    Welcome!
-                </Typography>
-                <Typography 
-                    variant="subtitle1"
-                    component="h2"
-                    gutterBottom
-                    align="center"
-                >
-                    Sign in and enjoy!
-                </Typography>
-                </div>
-                <TextField 
-                    label="email address"
-                    variant="outlined"
-                    color="primary"
-                    type="email"
-                    name="email"
-                    value={email}
-                    fullWidth
-                    required
-                    className={classes.field}
-                    error={emailError}
-                    onChange={handleChange}
-                />
-                <TextField 
-                    label="choose password"
-                    variant="outlined"
-                    color="primary"
-                    type='password'
-                    name="password"
-                    value={password}
-                    fullWidth
-                    required
-                    className={classes.field}
-                    error={passwordError}
-                    onChange={handleChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"   
-                    endIcon={<SendIcon />} 
-                    className={classes.btn} 
-                >
-                    SIGN IN
-                </Button>
-            </form>
+        <Container>
+            <div className={classes.wrapper}>
+                <form autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
+                    <div>
+                        <Typography 
+                            variant="h5"
+                            component="h2"
+                            gutterBottom
+                            align="center"
+                        >
+                            Welcome!
+                        </Typography>
+                        <Typography 
+                            variant="subtitle1"
+                            component="h2"
+                            gutterBottom
+                            align="center"
+                        >
+                            Sign in and enjoy!
+                        </Typography>
+                    </div>
+                    <TextField 
+                        label="email address"
+                        variant="outlined"
+                        color="primary"
+                        type="email"
+                        name="email"
+                        value={email}
+                        fullWidth
+                        required
+                        className={classes.field}
+                        error={emailError}
+                        onChange={handleChange}
+                    />
+                    <TextField 
+                        label="choose password"
+                        variant="outlined"
+                        color="primary"
+                        type='password'
+                        name="password"
+                        value={password}
+                        fullWidth
+                        required
+                        className={classes.field}
+                        error={passwordError}
+                        onChange={handleChange}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"   
+                        endIcon={<SendIcon />} 
+                        className={classes.btn} 
+                    >
+                        SIGN IN
+                    </Button>
+                </form>
+                    <Typography
+                        variant="overline"
+                        align="right"    
+                    >
+                        New to Smart Books? 
+                        <Link to="/sign-up" className={classes.link}>
+                            Create new account
+                        </Link>
+                    </Typography>
+            </div>
         </Container>
     );
 }

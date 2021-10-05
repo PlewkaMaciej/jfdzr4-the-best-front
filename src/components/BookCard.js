@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -17,6 +18,10 @@ const useStyles = makeStyles({
             cursor: 'pointer',
             boxShadow: '1px 3px 8px rgba(0, 0, 0, .12)'
         }
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit'
     },
     cardActions: {
         display: 'flex',
@@ -44,52 +49,52 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
     }, [id, coverName]);
 
     return (
-
-        <div style={{maxWidth:'600px', margin: '0 auto', marginTop: '50px'}}>
             <Card 
                 sx={{ maxWidth: 300 }}
                 className={classes.card}
             >
-                <CardMedia
-                    component="img"
-                    height="330"
-                    image={imgUrl}
-                    alt={title}
-                />
-                <CardContent>
-                    <Typography 
-                        gutterBottom
-                        variant="h2"
-                        component="div"
-                        align="left"
-                        fontWeight="700"
-                        fontSize="24px"
-                    >
-                        {title}
-                    </Typography>
-                    <Typography 
-                        gutterBottom
-                        variant="subtitle1" 
-                        component="div"
-                    >
-                        {author}
-                    </Typography>
-                    <Typography
-                        gutterBottom 
-                        variant="body2" 
-                        color="text.secondary" 
-                        noWrap
-                    >
-                        {description}
-                    </Typography>
-                    <Typography 
-                        gutterBottom 
-                        variant="h6" 
-                        component="div"
-                    >
-                        {`cena: ${price.toFixed(2)} zł`}
-                    </Typography>
-                </CardContent>
+                <Link to={`/${id}`} className={classes.link}>
+                    <CardMedia
+                        component="img"
+                        height="330"
+                        image={imgUrl}
+                        alt={title}
+                    />
+                    <CardContent>
+                        <Typography 
+                            gutterBottom
+                            variant="h2"
+                            component="div"
+                            align="left"
+                            fontWeight="700"
+                            fontSize="24px"
+                        >
+                            {title}
+                        </Typography>
+                        <Typography 
+                            gutterBottom
+                            variant="subtitle1" 
+                            component="div"
+                        >
+                            {author}
+                        </Typography>
+                        <Typography
+                            gutterBottom 
+                            variant="body2" 
+                            color="text.secondary" 
+                            noWrap
+                        >
+                            {description}
+                        </Typography>
+                        <Typography 
+                            gutterBottom 
+                            variant="h6" 
+                            component="div"
+                        >
+                            {`cena: ${price.toFixed(2)} zł`}
+                        </Typography>
+                    </CardContent>
+                </Link>
                 <CardActions
                     className={classes.cardActions}
                 >
@@ -104,7 +109,6 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                     </Button>
                 </CardActions>
             </Card>
-        </div>
     );
 }
  

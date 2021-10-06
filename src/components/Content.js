@@ -9,8 +9,8 @@ const Content = () => (
         <Route exact path="/">
             <Home />
         </Route>
-        <Route path="/:id">
-            <BookDetails />
+        <Route path="/book/:id">
+            <BookDetails /> 
         </Route>
         <Route path="/sign-in">
             <SignInForm />

@@ -53,7 +53,7 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                 sx={{ maxWidth: 300 }}
                 className={classes.card}
             >
-                <Link to={`/${id}`} className={classes.link}>
+                <Link to={`/book/${id}`} className={classes.link}>
                     <CardMedia
                         component="img"
                         height="330"

@@ -1,19 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../index';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '../index';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 
 const BookDetails = () => {
     const { id } = useParams();
     const [data, setData] = useState(null);
+    const [imgUrl, setImgUrl] = useState('');
 
     useEffect(() => {
         const docRef = doc(db, 'books', id);
         getDoc(docRef)
             .then(docSnap => {
                 setData(docSnap.data());
+                const { coverName } = docSnap.data();
+                getDownloadURL(ref(storage, `covers/${id}/${coverName}`))
+                    .then(url => {
+                        setImgUrl(url);
+                    })
             })
             .catch(err => {
                 console.log(err, err.message);
@@ -27,10 +34,11 @@ const BookDetails = () => {
             <CardMedia
                 component="img"
                 height="330"
-                // image={imgUrl}
+                image={imgUrl}
                 alt={data.title}
+                sx={{alignSelf: 'center'}}
             />
-            <Box>
+            <Box sx={{m: 1}}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 10}}>
                 <h2>{data.title}</h2>
                 <p>back</p>
@@ -39,7 +47,7 @@ const BookDetails = () => {
                 <h5>Published: {data.published}</h5>
                 <p>{data.description}</p>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', pr: 10}}>
-                    <p>Price: {data.price.toFixed(2)}</p>
+                    <p>Price: {data.price.toFixed(2)} zł</p>
                     <p>Add to basket</p>
                 </Box>
             </Box>

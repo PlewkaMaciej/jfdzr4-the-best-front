@@ -4,21 +4,14 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { makeStyles } from '@mui/styles';
 import { storage } from './../index';
 import { ref, getDownloadURL } from 'firebase/storage';
+import Fab from '@mui/material/Fab';
 
 const useStyles = makeStyles({  
-    card: {
-        borderRadius: '12px',
-        '&:hover': {
-            cursor: 'pointer',
-            boxShadow: '1px 3px 8px rgba(0, 0, 0, .12)'
-        }
-    },
     link: {
         textDecoration: 'none',
         color: 'inherit'
@@ -27,9 +20,6 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         marginBottom: 20,
-    },    
-    btn: {
-        alignSelf: 'center'
     }
 })
 
@@ -50,8 +40,14 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
 
     return (
             <Card 
-                sx={{ maxWidth: 300 }}
-                className={classes.card}
+                sx={{ 
+                    maxWidth: 300,
+                    borderRadius: '12px',
+                    '&:hover': {
+                        cursor: 'pointer',
+                        boxShadow: '1px 3px 8px rgba(0, 0, 0, .12)' 
+                    }
+                }}
             >
                 <Link to={`/book/${id}`} className={classes.link}>
                     <CardMedia
@@ -60,21 +56,23 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                         image={imgUrl}
                         alt={title}
                     />
-                    <CardContent>
+                    <CardContent sx={{
+                            minHeight: '175px',
+                            marginTop: '20px'
+                        }}>
                         <Typography 
-                            gutterBottom
-                            variant="h2"
-                            component="div"
+                            variant="h5"
                             align="left"
                             fontWeight="700"
-                            fontSize="24px"
+                            fontSize="22px"
+                            sx={{marginBottom: '10px'}}
                         >
                             {title}
                         </Typography>
                         <Typography 
-                            gutterBottom
                             variant="subtitle1" 
                             component="div"
+                            sx={{marginBottom: '10px'}}
                         >
                             {author}
                         </Typography>
@@ -87,9 +85,9 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                             {description}
                         </Typography>
                         <Typography 
-                            gutterBottom 
                             variant="h6" 
                             component="div"
+                            sx={{mt:2}}
                         >
                             {`cena: ${price.toFixed(2)} zł`}
                         </Typography>
@@ -98,15 +96,15 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                 <CardActions
                     className={classes.cardActions}
                 >
-                    <Button 
-                        variant="contained"
+                    <Fab 
+                        variant="extended"
                         color="primary"
-                        type="submit"   
-                        startIcon={<AddShoppingCartIcon />}
-                        className={classes.btn}
+                        type="submit"
+                        aria-label="add to cart"   
                     >
+                        <AddShoppingCartIcon sx={{ mr: 1}} />
                         Add to Basket
-                    </Button>
+                    </Fab>
                 </CardActions>
             </Card>
     );

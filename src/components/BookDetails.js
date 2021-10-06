@@ -34,6 +34,7 @@ const BookDetails = () => {
             <CardMedia
                 component="img"
                 height="330"
+                width="300"
                 image={imgUrl}
                 alt={data.title}
                 sx={{alignSelf: 'center'}}

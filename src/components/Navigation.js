@@ -136,14 +136,16 @@ const Navigation = () => {
                     </Button>
                     {   
                         user
-                        ?   <Button 
-                                variant="contained"
-                                color="primary"
-                                sx={{mr: 1}}
-                                startIcon={<AccountCircleOutlinedIcon />}
-                            >
-                                Account
-                            </Button>
+                        ?   <Link to="/account" style={{textDecoration: 'none'}}>
+                                <Button 
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{mr: 1}}
+                                    startIcon={<AccountCircleOutlinedIcon />}
+                                >
+                                    Account
+                                </Button>
+                            </Link>
                         :   <Link to="/sign-in" style={{textDecoration: 'none'}}>
                                 <Button 
                                     variant="contained"

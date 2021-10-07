@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from './../index';
+import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { makeStyles } from '@mui/styles';
-import { storage } from './../index';
-import { ref, getDownloadURL } from 'firebase/storage';
 import Fab from '@mui/material/Fab';
 
 const useStyles = makeStyles({  

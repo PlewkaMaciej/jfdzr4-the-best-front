@@ -19,12 +19,12 @@ const BookList = () => {
     }, [])
 
     return (
-        <Box sx={{flexGrow: 1, maxWidth: '1000px', margin: '6rem auto'}}>
-            <Grid container spacing={3}>
+        <Box sx={{flexGrow: 1, maxWidth: '1000px', margin: '0 auto'}}>
+            <Grid container spacing={{xs:1, sm:2, md:3} }>
             {bookCollection && 
                 bookCollection.map(book => {
                     return (
-                        <Grid key={book.id} item xs={4}>
+                        <Grid key={book.id} item xs={12} sm={6} md={4}>
                             <BookCard {...book} />
                         </Grid>
                     )

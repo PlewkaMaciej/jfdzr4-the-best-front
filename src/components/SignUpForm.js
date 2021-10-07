@@ -4,54 +4,12 @@ import { auth } from './../index';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../index';
-import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
-
-const useStyles = makeStyles({
-    wrapper: {
-        maxWidth: 670,
-        minHeight: 480,
-        margin: '12% auto',
-        padding: '20px 40px',
-        border: '1px solid #FAFAFA',
-        borderRadius: 20,
-        boxShadow: '0 0 10px rgba(0, 0, 0, .1)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-    },   
-    btn: {
-        marginTop: 10,
-        marginBottom: 30,
-        width: '25%',
-        alignSelf: 'center'
-    },
-    field: {
-        marginTop: 20,
-        marginBottom: 20
-    },
-        link: {
-        marginLeft: 15,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 15,
-        paddingRight: 15,
-        textDecoration: 'none',
-        color: '#fff',
-        backgroundColor: '#2196f3',
-        borderRadius: 5,
-        boxShadow: '0 0 2px rgba(0, 0, 0, .1)'
-    }
-})
+import { useStyles } from './Form.styled';
 
 const SignUpForm = () => {
 
@@ -117,7 +75,11 @@ const SignUpForm = () => {
     return (
         <Container>
             <div className={classes.wrapper}>
-                <form autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
+                <form 
+                    autoComplete="off" 
+                    className={classes.form} 
+                    onSubmit={handleSubmit}
+                >
                     <div>
                     <Typography 
                         variant="h5"

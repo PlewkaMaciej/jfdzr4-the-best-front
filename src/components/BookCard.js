@@ -1,30 +1,27 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { storage } from './../index';
+import Spinner from './Spinner';
+import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { makeStyles } from '@mui/styles';
-import { storage } from './../index';
-import { ref, getDownloadURL } from 'firebase/storage';
+import Fab from '@mui/material/Fab';
+import Box from '@mui/material/Box';
 
 const useStyles = makeStyles({  
-    card: {
-        borderRadius: '12px',
-        '&:hover': {
-            cursor: 'pointer',
-            boxShadow: '1px 3px 8px rgba(0, 0, 0, .12)'
-        }
+    link: {
+        textDecoration: 'none',
+        color: 'inherit'
     },
     cardActions: {
         display: 'flex',
         justifyContent: 'center',
         marginBottom: 20,
-    },    
-    btn: {
-        alignSelf: 'center'
     }
 })
 
@@ -44,67 +41,88 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
     }, [id, coverName]);
 
     return (
-
-        <div style={{maxWidth:'600px', margin: '0 auto', marginTop: '50px'}}>
             <Card 
-                sx={{ maxWidth: 300 }}
-                className={classes.card}
+                sx={{ 
+                    maxWidth: 300,
+                    minHeight: 505,
+                    borderRadius: '12px',
+                    '&:hover': {
+                        cursor: 'pointer',
+                        boxShadow: '1px 3px 8px rgba(0, 0, 0, .12)' 
+                    }
+                }}
             >
-                <CardMedia
-                    component="img"
-                    height="330"
-                    image={imgUrl}
-                    alt={title}
-                />
-                <CardContent>
-                    <Typography 
-                        gutterBottom
-                        variant="h2"
-                        component="div"
-                        align="left"
-                        fontWeight="700"
-                        fontSize="24px"
-                    >
-                        {title}
-                    </Typography>
-                    <Typography 
-                        gutterBottom
-                        variant="subtitle1" 
-                        component="div"
-                    >
-                        {author}
-                    </Typography>
-                    <Typography
-                        gutterBottom 
-                        variant="body2" 
-                        color="text.secondary" 
-                        noWrap
-                    >
-                        {description}
-                    </Typography>
-                    <Typography 
-                        gutterBottom 
-                        variant="h6" 
-                        component="div"
-                    >
-                        {`cena: ${price.toFixed(2)} zł`}
-                    </Typography>
-                </CardContent>
+                <Link to={`/book/${id}`} className={classes.link}>
+                    {
+                        imgUrl !== ''  
+                        ?   <CardMedia
+                                component="img"
+                                height="330"
+                                image={imgUrl}
+                                alt={title}
+                            />
+                        :   <Box sx={{
+                                height: 330,
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                        >
+                                <Spinner />
+                        </Box>
+                    }                    
+                    <CardContent sx={{
+                            minHeight: '175px',
+                            marginTop: '20px'
+                        }}>
+                        <Typography 
+                            variant="h5"
+                            align="left"
+                            fontWeight="700"
+                            fontSize="22px"
+                            sx={{marginBottom: '10px'}}
+                        >
+                            {title}
+                        </Typography>
+                        <Typography 
+                            variant="subtitle1" 
+                            component="div"
+                            sx={{marginBottom: '10px'}}
+                        >
+                            {author}
+                        </Typography>
+                        <Typography
+                            gutterBottom 
+                            variant="body2" 
+                            color="text.secondary" 
+                            noWrap
+                        >
+                            {description}
+                        </Typography>
+                        <Typography 
+                            variant="h6" 
+                            component="div"
+                            sx={{mt:2}}
+                        >
+                            {`cena: ${price.toFixed(2)} zł`}
+                        </Typography>
+                    </CardContent>
+                </Link>
                 <CardActions
                     className={classes.cardActions}
                 >
-                    <Button 
-                        variant="contained"
+                    <Fab 
+                        variant="extended"
                         color="primary"
-                        type="submit"   
-                        startIcon={<AddShoppingCartIcon />}
-                        className={classes.btn}
+                        type="submit"
+                        aria-label="add to cart"   
                     >
+                        <AddShoppingCartIcon sx={{ mr: 1}} />
                         Add to Basket
-                    </Button>
+                    </Fab>
                 </CardActions>
             </Card>
-        </div>
     );
 }
  

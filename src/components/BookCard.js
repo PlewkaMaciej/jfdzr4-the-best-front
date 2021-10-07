@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { storage } from './../index';
+import Spinner from './Spinner';
 import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Fab from '@mui/material/Fab';
+import Box from '@mui/material/Box';
 
 const useStyles = makeStyles({  
     link: {
@@ -42,6 +44,7 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
             <Card 
                 sx={{ 
                     maxWidth: 300,
+                    minHeight: 505,
                     borderRadius: '12px',
                     '&:hover': {
                         cursor: 'pointer',
@@ -50,12 +53,25 @@ const BookCard = ({title, author, price, id, coverName, description}) => {
                 }}
             >
                 <Link to={`/book/${id}`} className={classes.link}>
-                    <CardMedia
-                        component="img"
-                        height="330"
-                        image={imgUrl}
-                        alt={title}
-                    />
+                    {
+                        imgUrl !== ''  
+                        ?   <CardMedia
+                                component="img"
+                                height="330"
+                                image={imgUrl}
+                                alt={title}
+                            />
+                        :   <Box sx={{
+                                height: 330,
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                                }}
+                        >
+                                <Spinner />
+                        </Box>
+                    }                    
                     <CardContent sx={{
                             minHeight: '175px',
                             marginTop: '20px'

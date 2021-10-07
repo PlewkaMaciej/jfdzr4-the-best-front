@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../index';
+import Spinner from './Spinner';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -50,14 +51,28 @@ const BookDetails = () => {
                 boxShadow: '0 0 10px rgba(0,0,0, .1)'
             }}
         >
-            <CardMedia
-                component="img"
-                height="330"
-                width="300"
-                image={imgUrl}
-                alt={data.title}
-                sx={{alignSelf: 'center'}}
-            />
+            {
+                imgUrl !== '' 
+                ?   <CardMedia
+                    component="img"
+                    height="330"
+                    width="300"
+                    image={imgUrl}
+                    alt={data.title}
+                    sx={{alignSelf: 'center'}}
+                    />
+                :   <Box sx={{
+                        height: 330,
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center'
+                        }}
+                >
+                        <Spinner />
+                </Box>  
+            }
             <Box 
                 sx={{
                     padding: '0 2rem 0 2.5rem',

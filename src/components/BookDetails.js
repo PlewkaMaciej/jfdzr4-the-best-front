@@ -150,7 +150,7 @@ const BookDetails = () => {
                         aria-label="add to cart"   
                     >
                         <AddShoppingCartIcon sx={{ mr: 1}} />
-                        Add to Basket
+                        Add to Cart
                     </Fab>
                 </Box>
             </Box>

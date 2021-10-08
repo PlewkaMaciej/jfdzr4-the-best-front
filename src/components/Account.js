@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../controllers/UserContext';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { ref, getDownloadURL } from 'firebase/storage';
+import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../index';
 import Spinner from './Spinner';
 import Box from '@mui/material/Box';
@@ -17,9 +17,26 @@ const Account = () => {
     const { uid, email } = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [imgUrl, setImgUrl] = useState('');
+    const [file, setFile] = useState(null);
 
     const handleBack = () => {
         history.go(-1);
+    }
+
+    const handleFileChange = e => {
+        setFile(e.target.files[0]);
+    }
+
+    const handleFileUpload = () => {
+        const storageRef = ref(storage, `avatars/${uid}/${file.name}`);
+        uploadBytes(storageRef, file)
+            .then((snapshot) => {
+                console.log(snapshot)
+            })
+        const userDocRef = doc(db, 'users', uid);
+        updateDoc(userDocRef, {
+            'avatar': file.name
+        })
     }
 
     useEffect(() => {
@@ -148,9 +165,15 @@ const Account = () => {
                             id="change-avatar"
                             multiple
                             type="file"
+                            onChange={handleFileChange}
                             />
                             <label htmlFor="change-avatar">
-                            <Button variant="outlined" component="span" style={{marginLeft: '10px'}}>
+                            <Button 
+                                variant="outlined" 
+                                component="span" 
+                                style={{marginLeft: '10px'}} 
+                                onClick={handleFileUpload}
+                            >
                                 Upload
                             </Button>
                             </label> 

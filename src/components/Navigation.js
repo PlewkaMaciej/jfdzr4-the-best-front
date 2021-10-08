@@ -132,7 +132,7 @@ const Navigation = () => {
                         sx={{mr: 1}}
                         startIcon={<AddShoppingCartIcon />}
                     >
-                        Basket
+                        Cart
                     </Button>
                     {   
                         user

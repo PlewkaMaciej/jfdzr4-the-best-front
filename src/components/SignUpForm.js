@@ -52,9 +52,10 @@ const SignUpForm = () => {
         if (email && password && username) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    addDoc(collection(db, "users"), {
+                    addDoc(collection(db, 'users'), {
                         id: userCredential.user.uid,
-                        username: username
+                        username: username,
+                        avatar: 'default-avatar.png'
                     })
                 })
                 .then(() => {

@@ -10,6 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Fab from '@mui/material/Fab';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const Account = () => {
     const history = useHistory();
@@ -133,6 +134,26 @@ const Account = () => {
                         sx={{fontWeight: 300}}
                     >
                         Email: { email }
+                    </Typography>
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        gutterBottom
+                        sx={{fontWeight: 300}}
+                    >
+                        Change avatar: 
+                            <input
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            id="change-avatar"
+                            multiple
+                            type="file"
+                            />
+                            <label htmlFor="change-avatar">
+                            <Button variant="outlined" component="span" style={{marginLeft: '10px'}}>
+                                Upload
+                            </Button>
+                            </label> 
                     </Typography>
                 </Box>
             </Box>

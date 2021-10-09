@@ -10,6 +10,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import App from './App';
 
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 //firebase auth

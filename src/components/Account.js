@@ -34,7 +34,26 @@ const Account = () => {
         const updateFirestore = await updateDoc(userDocRef, {
             'avatar': file.name
         });
-        return Promise.all([updateStorage, updateFirestore]);
+        return Promise.all([updateStorage, updateFirestore])
+            .then(() => {
+                const docRef = doc(db, 'users', uid);
+                getDoc(docRef)
+                    .then(docSnapshot => {
+                            const { username, avatar } = docSnapshot.data();
+                            setUsername(username);
+                            if (avatar === 'default-avatar.png') {
+                                getDownloadURL(ref(storage, `avatars/${avatar}`))
+                                    .then(url => {
+                                        setImgUrl(url);
+                                    })
+                            } else {
+                                getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
+                                .then(url => {
+                                    setImgUrl(url);
+                                })
+                            }
+                    })
+            });
     }
 
     useEffect(() => {
@@ -154,15 +173,30 @@ const Account = () => {
                         sx={{fontWeight: 300}}
                     >
                         Change avatar: 
-                            <input
+                        <input 
+                            type="file" 
+                            onChange={handleFileChange}
+                            accept="image/*"
+                        />
+
+                            {/* <input
                             accept="image/*"
                             style={{ display: 'none' }}
                             id="change-avatar"
                             multiple
                             type="file"
                             onChange={handleFileChange}
-                            />
-                            <label htmlFor="change-avatar">
+                            /> */}
+                            {/* <label htmlFor="change-avatar">
+                            <Button 
+                                variant="outlined" 
+                                component="span" 
+                                style={{marginLeft: '10px'}} 
+                                onLoad={handleFileUpload}
+                            >
+                                Upload
+                            </Button>
+                            </label>  */}
                             <Button 
                                 variant="outlined" 
                                 component="span" 
@@ -171,7 +205,6 @@ const Account = () => {
                             >
                                 Upload
                             </Button>
-                            </label> 
                     </Typography>
                 </Box>
             </Box>

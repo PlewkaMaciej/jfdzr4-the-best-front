@@ -4,7 +4,7 @@ import BookDetails from './BookDetails';
 import Account from './Account';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
-import { Posts } from './forumComponents/posts';
+import { Posts } from './forumComponents/Posts';
 
 const Content = () => (
     <Switch>

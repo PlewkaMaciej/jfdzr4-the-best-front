@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../controllers/UserContext';
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../index';
 import Spinner from './Spinner';
@@ -27,37 +27,33 @@ const Account = () => {
         setFile(e.target.files[0]);
     }
 
-    const handleFileUpload = () => {
+    const handleFileUpload = async () => {
         const storageRef = ref(storage, `avatars/${uid}/${file.name}`);
-        uploadBytes(storageRef, file)
-            .then((snapshot) => {
-                console.log(snapshot)
-            })
+        const updateStorage = await uploadBytes(storageRef, file);
         const userDocRef = doc(db, 'users', uid);
-        updateDoc(userDocRef, {
+        const updateFirestore = await updateDoc(userDocRef, {
             'avatar': file.name
-        })
+        });
+        return Promise.all([updateStorage, updateFirestore]);
     }
 
     useEffect(() => {
-        const q = query(collection(db, 'users'), where('id', '==', uid));
-        getDocs(q)
-            .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                    const { username, avatar } = doc.data();
-                    setUsername(username);
-                    if (avatar === 'default-avatar.png') {
-                        getDownloadURL(ref(storage, `avatars/${avatar}`))
-                            .then(url => {
-                                setImgUrl(url);
-                            })
-                    } else {
-                        getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
-                            .then(url => {
-                                setImgUrl(url);
-                            })
-                    }
-                })
+        const docRef = doc(db, 'users', uid);
+        getDoc(docRef)
+            .then(docSnapshot => {
+                const { username, avatar } = docSnapshot.data();
+                setUsername(username);
+                if (avatar === 'default-avatar.png') {
+                    getDownloadURL(ref(storage, `avatars/${avatar}`))
+                        .then(url => {
+                            setImgUrl(url);
+                        })
+                } else {
+                    getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
+                        .then(url => {
+                            setImgUrl(url);
+                        })
+                }
             })
     }, [uid]);
 
@@ -78,8 +74,7 @@ const Account = () => {
                     ?   <Box sx={{
                             display: 'flex',
                             width: '300px',
-                            height: '300px',
-                            backgroundColor: '#fff'
+                            height: '300px'
                             }}
                     >   
                             <CardMedia
@@ -117,7 +112,7 @@ const Account = () => {
                         <Fab
                             onClick={handleBack}
                             variant="extended"
-                            color="primary"
+                            // color="primary"
                             aria-label="go back"
                             sx={{
                                 alignSelf: 'flex-end',

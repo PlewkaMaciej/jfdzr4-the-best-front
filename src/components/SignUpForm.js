@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { auth } from './../index';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from '../index';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -52,8 +52,8 @@ const SignUpForm = () => {
         if (email && password && username) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    addDoc(collection(db, 'users'), {
-                        id: userCredential.user.uid,
+                    const userRef = doc(db, 'users', userCredential.user.uid)
+                    setDoc(userRef, {
                         username: username,
                         avatar: 'default-avatar.png'
                     })

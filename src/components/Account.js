@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../controllers/UserContext';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { ref, getDownloadURL } from 'firebase/storage';
+import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../index';
 import Spinner from './Spinner';
 import Box from '@mui/material/Box';
@@ -10,36 +10,69 @@ import CardMedia from '@mui/material/CardMedia';
 import Fab from '@mui/material/Fab';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const Account = () => {
     const history = useHistory();
     const { uid, email } = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [imgUrl, setImgUrl] = useState('');
+    const [file, setFile] = useState(null);
 
     const handleBack = () => {
         history.go(-1);
     }
 
+    const handleFileChange = e => {
+        setFile(e.target.files[0]);
+    }
+
+    const handleFileUpload = async () => {
+        const storageRef = ref(storage, `avatars/${uid}/${file.name}`);
+        const updateStorage = await uploadBytes(storageRef, file);
+        const userDocRef = doc(db, 'users', uid);
+        const updateFirestore = await updateDoc(userDocRef, {
+            'avatar': file.name
+        });
+        return Promise.all([updateStorage, updateFirestore])
+            .then(() => {
+                const docRef = doc(db, 'users', uid);
+                getDoc(docRef)
+                    .then(docSnapshot => {
+                            const { username, avatar } = docSnapshot.data();
+                            setUsername(username);
+                            if (avatar === 'default-avatar.png') {
+                                getDownloadURL(ref(storage, `avatars/${avatar}`))
+                                    .then(url => {
+                                        setImgUrl(url);
+                                    })
+                            } else {
+                                getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
+                                .then(url => {
+                                    setImgUrl(url);
+                                })
+                            }
+                    })
+            });
+    }
+
     useEffect(() => {
-        const q = query(collection(db, 'users'), where('id', '==', uid));
-        getDocs(q)
-            .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                    const { username, avatar } = doc.data();
-                    setUsername(username);
-                    if (avatar === 'default-avatar.png') {
-                        getDownloadURL(ref(storage, `avatars/${avatar}`))
-                            .then(url => {
-                                setImgUrl(url);
-                            })
-                    } else {
-                        getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
-                            .then(url => {
-                                setImgUrl(url);
-                            })
-                    }
-                })
+        const docRef = doc(db, 'users', uid);
+        getDoc(docRef)
+            .then(docSnapshot => {
+                const { username, avatar } = docSnapshot.data();
+                setUsername(username);
+                if (avatar === 'default-avatar.png') {
+                    getDownloadURL(ref(storage, `avatars/${avatar}`))
+                        .then(url => {
+                            setImgUrl(url);
+                        })
+                } else {
+                    getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
+                        .then(url => {
+                            setImgUrl(url);
+                        })
+                }
             })
     }, [uid]);
 
@@ -60,8 +93,7 @@ const Account = () => {
                     ?   <Box sx={{
                             display: 'flex',
                             width: '300px',
-                            height: '300px',
-                            backgroundColor: '#fff'
+                            height: '300px'
                             }}
                     >   
                             <CardMedia
@@ -99,7 +131,7 @@ const Account = () => {
                         <Fab
                             onClick={handleBack}
                             variant="extended"
-                            color="primary"
+                            // color="primary"
                             aria-label="go back"
                             sx={{
                                 alignSelf: 'flex-end',
@@ -133,6 +165,46 @@ const Account = () => {
                         sx={{fontWeight: 300}}
                     >
                         Email: { email }
+                    </Typography>
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        gutterBottom
+                        sx={{fontWeight: 300}}
+                    >
+                        Change avatar: 
+                        <input 
+                            type="file" 
+                            onChange={handleFileChange}
+                            accept="image/*"
+                        />
+
+                            {/* <input
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            id="change-avatar"
+                            multiple
+                            type="file"
+                            onChange={handleFileChange}
+                            /> */}
+                            {/* <label htmlFor="change-avatar">
+                            <Button 
+                                variant="outlined" 
+                                component="span" 
+                                style={{marginLeft: '10px'}} 
+                                onLoad={handleFileUpload}
+                            >
+                                Upload
+                            </Button>
+                            </label>  */}
+                            <Button 
+                                variant="outlined" 
+                                component="span" 
+                                style={{marginLeft: '10px'}} 
+                                onClick={handleFileUpload}
+                            >
+                                Upload
+                            </Button>
                     </Typography>
                 </Box>
             </Box>

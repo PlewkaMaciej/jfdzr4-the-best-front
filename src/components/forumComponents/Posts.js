@@ -31,15 +31,19 @@ export const Posts = () => {
 
   return (
     <>
-      <Navigation />
-      <section className="section-create-post">
-        <Button onClick={changeStatusOfModal} variant="contained">
-          Create new post
-        </Button>
-      </section>
-      {posts.map((post,index)=>{
-         return <ShowPosts key={index} title={post.title} text={post.text}/>
-      })}
+      {!stateOfModal &&(
+        <>
+           <section className="section-create-post">
+           <Button onClick={changeStatusOfModal} variant="contained">
+             Create new post
+           </Button>
+         </section>
+         {posts.map((post,index)=>{
+            return <ShowPosts key={index} title={post.title} text={post.text}/>
+         })}
+         </>
+      )}
+     
      
       {stateOfModal && (
         <>

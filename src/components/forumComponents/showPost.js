@@ -15,7 +15,7 @@ export const ShowPosts = ({ title, text }) => {
       textAlign: "justify",
     },
     typographyTitleAboutBook: {
-      marginTop: "20px",
+      marginTop: "21px",
     },
     laneSection:{
       display:"flex",

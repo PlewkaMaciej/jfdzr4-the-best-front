@@ -4,6 +4,7 @@ import BookDetails from './BookDetails';
 import Account from './Account';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
+import { Posts } from './forumComponents/Posts';
 
 const Content = () => (
     <Switch>
@@ -21,6 +22,9 @@ const Content = () => (
         </Route>
         <Route path="/sign-up">
             <SignUpForm />
+        </Route>
+        <Route path="/forum">
+            <Posts />
         </Route>
     </Switch>
 )

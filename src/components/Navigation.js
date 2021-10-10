@@ -110,6 +110,7 @@ const Navigation = () => {
                     >
                         About
                     </Button>
+                    <Link to="/forum" style={{textDecoration: 'none'}}>
                     <Button 
                         variant="contained"
                         color="primary"
@@ -118,6 +119,7 @@ const Navigation = () => {
                     >
                         Forum
                     </Button>
+                    </Link>
                     <Button 
                         variant="contained"
                         color="primary"

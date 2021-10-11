@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Redirect } from 'react-router';
-import { UserContext } from '../controllers/UserContext';
+import { UserContext } from '../../controllers/UserContext';
 
 const Auth = ({ children }) => {
     const { uid } = useContext(UserContext);

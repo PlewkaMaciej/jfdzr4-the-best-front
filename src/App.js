@@ -1,8 +1,7 @@
 import Navigation from './components/Navigation';
 import Content from './components/Content';
 import { UserContextProvider } from './controllers/UserContext';
-import Wrapper from './components/Wrapper';
-
+import Wrapper from './components/auxiliaries/Wrapper';
 
 function App() {
   return (

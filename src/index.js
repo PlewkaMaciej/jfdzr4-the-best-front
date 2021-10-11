@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router} from 'react-router-dom';
 import './index.css';
 import './normalize.css';
-import { firebaseConfig } from './firebaseConfiguration';
+import App from './App';
+import { firebaseConfig } from './firebase.config';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import App from './App';
 
-
-// Initialize Firebase
+// initialize firebase
 export const app = initializeApp(firebaseConfig);
 //firebase auth
 export const auth = getAuth();

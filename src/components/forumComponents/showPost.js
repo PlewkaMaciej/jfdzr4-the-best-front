@@ -1,7 +1,6 @@
 import { Paper } from "@mui/material";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useEffect } from "react";
 
 export const ShowPosts = ({ title, text }) => {
   const useStyles = makeStyles({

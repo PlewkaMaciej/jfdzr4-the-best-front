@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { db } from './../index';
+import { db } from '../../index';
 import { collection, onSnapshot } from '@firebase/firestore';
 import BookCard from './BookCard';
-import Spinner from './Spinner';
+import Spinner from '../auxiliaries/Spinner';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 

@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../controllers/UserContext';
+import { UserContext } from '../../controllers/UserContext';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../index';
-import Auth from './Auth';
+import { storage } from '../../index';
+import Auth from '../auxiliaries/Auth';
+import { UserAvatar} from './Account.styled';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { UserAvatar} from './Account.styled';
 
 const Account = () => {
     const history = useHistory();

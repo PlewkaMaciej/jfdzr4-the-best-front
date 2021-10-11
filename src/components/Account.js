@@ -1,22 +1,19 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../controllers/UserContext';
-import { getDoc, doc, updateDoc } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
-import { db, storage } from '../index';
-import Spinner from './Spinner';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../index';
+import Auth from './Auth';
 import Box from '@mui/material/Box';
-import CardMedia from '@mui/material/CardMedia';
 import Fab from '@mui/material/Fab';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { UserAvatar} from './Account.styled';
 
 const Account = () => {
     const history = useHistory();
-    const { uid, email } = useContext(UserContext);
-    const [username, setUsername] = useState('');
-    const [imgUrl, setImgUrl] = useState('');
+    const { uid, email, username, avatarUrl, setAvatarUrl } = useContext(UserContext);
     const [file, setFile] = useState(null);
 
     const handleBack = () => {
@@ -27,56 +24,20 @@ const Account = () => {
         setFile(e.target.files[0]);
     }
 
-    const handleFileUpload = async () => {
-        const storageRef = ref(storage, `avatars/${uid}/${file.name}`);
-        const updateStorage = await uploadBytes(storageRef, file);
-        const userDocRef = doc(db, 'users', uid);
-        const updateFirestore = await updateDoc(userDocRef, {
-            'avatar': file.name
-        });
-        return Promise.all([updateStorage, updateFirestore])
-            .then(() => {
-                const docRef = doc(db, 'users', uid);
-                getDoc(docRef)
-                    .then(docSnapshot => {
-                            const { username, avatar } = docSnapshot.data();
-                            setUsername(username);
-                            if (avatar === 'default-avatar.png') {
-                                getDownloadURL(ref(storage, `avatars/${avatar}`))
-                                    .then(url => {
-                                        setImgUrl(url);
-                                    })
-                            } else {
-                                getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
-                                .then(url => {
-                                    setImgUrl(url);
-                                })
-                            }
-                    })
-            });
+    const handleFileUpload = () => {
+        const storageRef = ref(storage, `avatars/${uid}/`);
+        uploadBytes(storageRef, file)
+            .then(snapshot => {
+                setFile(null);
+                getDownloadURL(snapshot.ref)
+                    .then(url => {
+                        setAvatarUrl(url);
+                    });
+            })
     }
 
-    useEffect(() => {
-        const docRef = doc(db, 'users', uid);
-        getDoc(docRef)
-            .then(docSnapshot => {
-                const { username, avatar } = docSnapshot.data();
-                setUsername(username);
-                if (avatar === 'default-avatar.png') {
-                    getDownloadURL(ref(storage, `avatars/${avatar}`))
-                        .then(url => {
-                            setImgUrl(url);
-                        })
-                } else {
-                    getDownloadURL(ref(storage, `avatars/${uid}/${avatar}`))
-                        .then(url => {
-                            setImgUrl(url);
-                        })
-                }
-            })
-    }, [uid]);
-
     return (
+        <Auth>
             <Box 
                 sx={{
                     maxWidth: '1000px',
@@ -88,36 +49,12 @@ const Account = () => {
                     boxShadow: '0 0 10px rgba(0,0,0, .1)'
                 }}
             >
-                {
-                    imgUrl !== '' 
-                    ?   <Box sx={{
-                            display: 'flex',
-                            width: '300px',
-                            height: '300px'
-                            }}
-                    >   
-                            <CardMedia
-                            component="img"
-                            height="100%"
-                            width="100%"
-                            image={imgUrl}
-                            alt="user avatar"
-                            sx={{alignSelf: 'center', borderRadius: '50%'}}
-                            />
-                        </Box>
-                    :   <Box sx={{
-                            height: 300,
-                            width: 300,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            borderRadius: '50%'
-                            }}
-                    >
-                            <Spinner />
-                    </Box>  
-                }
+                <Box sx={{display: 'flex',}}>   
+                    <UserAvatar 
+                        alt="avatar" 
+                        src={avatarUrl}
+                    />
+                </Box>  
                 <Box 
                     sx={{
                         padding: '0 2rem 0 2.5rem',
@@ -131,7 +68,6 @@ const Account = () => {
                         <Fab
                             onClick={handleBack}
                             variant="extended"
-                            // color="primary"
                             aria-label="go back"
                             sx={{
                                 alignSelf: 'flex-end',
@@ -178,25 +114,6 @@ const Account = () => {
                             onChange={handleFileChange}
                             accept="image/*"
                         />
-
-                            {/* <input
-                            accept="image/*"
-                            style={{ display: 'none' }}
-                            id="change-avatar"
-                            multiple
-                            type="file"
-                            onChange={handleFileChange}
-                            /> */}
-                            {/* <label htmlFor="change-avatar">
-                            <Button 
-                                variant="outlined" 
-                                component="span" 
-                                style={{marginLeft: '10px'}} 
-                                onLoad={handleFileUpload}
-                            >
-                                Upload
-                            </Button>
-                            </label>  */}
                             <Button 
                                 variant="outlined" 
                                 component="span" 
@@ -208,6 +125,7 @@ const Account = () => {
                     </Typography>
                 </Box>
             </Box>
+        </Auth>
     );
 }
  

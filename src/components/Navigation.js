@@ -71,7 +71,7 @@ const Navigation = () => {
         justifyContent: 'space-between'
     })
 
-    const user = useContext(UserContext);
+    const { uid } = useContext(UserContext);
 
     const handleSignOut = () => {
         signOut(auth);
@@ -137,7 +137,7 @@ const Navigation = () => {
                         Cart
                     </Button>
                     {   
-                        user
+                        uid
                         ?   <Link to="/account" style={{textDecoration: 'none'}}>
                                 <Button 
                                     variant="contained"
@@ -160,7 +160,7 @@ const Navigation = () => {
                             </Link> 
                     }
                     {
-                        user
+                        uid
                         ?   <Button 
                                 variant="contained"
                                 color="primary"

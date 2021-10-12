@@ -17,7 +17,7 @@ const Account = () => {
     const [file, setFile] = useState(null);
 
     const handleBack = () => {
-        history.go(-1);
+        history.push('/');
     }
 
     const handleFileChange = e => {

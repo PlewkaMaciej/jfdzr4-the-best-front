@@ -34,7 +34,7 @@ const BookDetails = () => {
         }, [id]);
 
     const handleBack = () => {
-        history.go(-1);
+        history.push('/');
     }
 
     return (

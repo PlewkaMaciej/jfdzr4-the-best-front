@@ -1,4 +1,4 @@
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation/Navigation';
 import Content from './components/Content';
 import { UserContextProvider } from './controllers/UserContext';
 import Wrapper from './components/auxiliaries/Wrapper';

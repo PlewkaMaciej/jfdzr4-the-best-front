@@ -1,32 +1,28 @@
 import { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { auth } from './../index';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from '../index';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../index';
+import { useStyles } from './Form.styled';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
-import { useStyles } from './Form.styled';
 
-const SignUpForm = () => {
+const SignInForm = () => {
 
     const classes = useStyles();
 
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        username: ''
+        password: ''
     })
-    const { email, password, username } = formData;
+    const { email, password } = formData;
 
     const [shouldRedirect, setShouldRedirect] = useState(false); 
 
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
 
     const handleChange = e => {
         setFormData({
@@ -39,26 +35,19 @@ const SignUpForm = () => {
         e.preventDefault();
         setEmailError(false);
         setPasswordError(false);
-        setUsernameError(false);
         if (email === '') {
             setEmailError(true);
         } 
         if (password === '') {
             setPasswordError(true);
         }
-        if (username === '') {
-            setUsernameError(true);
-        }
-        if (email && password && username) {
-            createUserWithEmailAndPassword(auth, email, password)
+        if (email && password) {
+            signInWithEmailAndPassword(auth, email, password)
                 .then(userCredential => {
-                    const userRef = doc(db, 'users', userCredential.user.uid)
-                    setDoc(userRef, {
-                        username: username,
-                        avatar: 'default-avatar.png'
-                    })
-                })
-                .then(() => {
+                    setFormData({
+                    email: '',
+                    password: ''
+                    });
                     setShouldRedirect(true);
                 })
                 .catch(error => {
@@ -77,27 +66,27 @@ const SignUpForm = () => {
         <Container>
             <div className={classes.wrapper}>
                 <form 
-                    autoComplete="off" 
-                    className={classes.form} 
+                    autoComplete="off"
+                    className={classes.form}
                     onSubmit={handleSubmit}
                 >
                     <div>
-                    <Typography 
-                        variant="h5"
-                        component="h2"
-                        gutterBottom
-                        align="center"
-                    >
-                        Welcome!
-                    </Typography>
-                    <Typography 
-                        variant="subtitle1"
-                        component="h2"
-                        gutterBottom
-                        align="center"
-                    >
-                        Do not wait register now and join our community!
-                    </Typography>
+                        <Typography 
+                            variant="h5"
+                            component="h2"
+                            gutterBottom
+                            align="center"
+                        >
+                            Welcome!
+                        </Typography>
+                        <Typography 
+                            variant="subtitle1"
+                            component="h2"
+                            gutterBottom
+                            align="center"
+                        >
+                            Sign in and enjoy!
+                        </Typography>
                     </div>
                     <TextField 
                         label="email address"
@@ -125,19 +114,6 @@ const SignUpForm = () => {
                         error={passwordError}
                         onChange={handleChange}
                     />
-                    <TextField 
-                        label="username"
-                        variant="outlined"
-                        color="primary"
-                        type="text"
-                        name="username"
-                        value={username}
-                        fullWidth
-                        required
-                        className={classes.field}
-                        error={usernameError}
-                        onChange={handleChange}
-                    />
                     <Button
                         variant="contained"
                         color="primary"
@@ -145,16 +121,16 @@ const SignUpForm = () => {
                         endIcon={<SendIcon />} 
                         className={classes.btn} 
                     >
-                        SIGN UP
+                        SIGN IN
                     </Button>
                 </form>
                     <Typography
                         variant="overline"
                         align="right"    
                     >
-                        Already have an account?
-                        <Link to="/sign-in" className={classes.link}>
-                            Sign in
+                        New to Smart Books? 
+                        <Link to="/sign-up" className={classes.link}>
+                            Create new account
                         </Link>
                     </Typography>
             </div>
@@ -162,4 +138,4 @@ const SignUpForm = () => {
     );
 }
 
-export default SignUpForm;
+export default SignInForm;

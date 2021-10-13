@@ -1,4 +1,4 @@
-import { db } from "../../../index";
+import { db } from '../../../index';
 import { doc,getDoc } from "firebase/firestore";
 
 export const getUser = (userId, setUserData) => {

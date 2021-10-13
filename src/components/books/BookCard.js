@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ref, getDownloadURL } from 'firebase/storage';
-import { storage } from './../index';
-import Spinner from './Spinner';
+import { storage } from '../../index';
+import Spinner from '../auxiliaries/Spinner';
 import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';

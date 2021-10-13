@@ -1,9 +1,9 @@
 import { Switch, Route} from 'react-router-dom';
 import Home from './Home';
-import BookDetails from './BookDetails';
-import Account from './Account';
-import SignInForm from './SignInForm';
-import SignUpForm from './SignUpForm';
+import BookDetails from './books/BookDetails';
+import Account from './account/Account';
+import SignInForm from './forms/SignInForm';
+import SignUpForm from './forms/SignUpForm';
 import { Posts } from './forumComponents/Posts';
 
 const Content = () => (

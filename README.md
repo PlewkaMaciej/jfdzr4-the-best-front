@@ -1,1 +1,1 @@
-#### Getting started with THE-BEST-FRONT
+#### Book Store Smart Books

@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { UserContext } from '../controllers/UserContext';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../controllers/UserContext';
 import { auth } from '../index';
+import { signOut } from '@firebase/auth';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,7 +19,6 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import logo from '../logo.png';
-import { signOut } from '@firebase/auth';
 
 const Navigation = () => {
     const Search = styled('div')(({ theme }) => ({
@@ -71,7 +71,7 @@ const Navigation = () => {
         justifyContent: 'space-between'
     })
 
-    const user = useContext(UserContext);
+    const { uid } = useContext(UserContext);
 
     const handleSignOut = () => {
         signOut(auth);
@@ -137,7 +137,7 @@ const Navigation = () => {
                         Cart
                     </Button>
                     {   
-                        user
+                        uid
                         ?   <Link to="/account" style={{textDecoration: 'none'}}>
                                 <Button 
                                     variant="contained"
@@ -160,7 +160,7 @@ const Navigation = () => {
                             </Link> 
                     }
                     {
-                        user
+                        uid
                         ?   <Button 
                                 variant="contained"
                                 color="primary"

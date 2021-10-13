@@ -1,13 +1,11 @@
-import Navigation from "../Navigation";
 import Button from "@mui/material/Button";
 import "./post.css";
 import { ModalToCreatePost } from "./ModalToCreatePost";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../..";
+import { auth } from "../../index";
 import { getUser } from "./fetchingData/GetUser";
 import { ShowPosts } from "./showPost";
 import { getPosts } from "./fetchingData/GetPosts";

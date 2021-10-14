@@ -5,6 +5,7 @@ import Account from './account/Account';
 import SignInForm from './forms/SignInForm';
 import SignUpForm from './forms/SignUpForm';
 import { Posts } from './forumComponents/Posts';
+import Cart from './cart/Cart';
 
 const Content = () => (
     <Switch>
@@ -16,6 +17,9 @@ const Content = () => (
         </Route>
         <Route path="/account">
             <Account />
+        </Route>
+        <Route path="/cart">
+            <Cart />
         </Route>
         <Route path="/sign-in">
             <SignInForm />

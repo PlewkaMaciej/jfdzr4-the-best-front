@@ -4,7 +4,7 @@ import { UserContext } from '../../controllers/UserContext';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../index';
 import Auth from '../auxiliaries/Auth';
-import { UserAvatar} from './Account.styled';
+import { UserAvatar, ButtonWrapper } from './Account.styled';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
@@ -17,11 +17,17 @@ const Account = () => {
     const [file, setFile] = useState(null);
 
     const handleBack = () => {
-        history.go(-1);
+        history.push('/');
     }
+
+    //po zrezygnowaniu z uploadu nie zeruje się w inpucie plik na pozycji 0
 
     const handleFileChange = e => {
         setFile(e.target.files[0]);
+    }
+
+    const handleCancelClick = () => {
+        setFile(null);
     }
 
     const handleFileUpload = () => {
@@ -49,16 +55,43 @@ const Account = () => {
                     boxShadow: '0 0 10px rgba(0,0,0, .1)'
                 }}
             >
-                <Box sx={{display: 'flex',}}>   
+                <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>   
                     <UserAvatar 
                         alt="avatar" 
                         src={avatarUrl}
+                        sx={{boxShadow: '2px 2px 10px rgba(0, 0, 0, .75)'}}
                     />
+                            <Button 
+                                variant="text" 
+                                component="label" 
+                                style={{margin: '10px 0'}} 
+                            >
+                                <input 
+                                    type="file" 
+                                    onChange={handleFileChange}
+                                    accept="image/*"
+                                    hidden
+                                />
+                                Change avatar
+                            </Button>
+                            {
+                                file && (
+                                    <>
+                                        <Typography variant="body" gutterBottom sx={{fontFamily: 'Roboto'}}>
+                                            file name: {file.name}
+                                        </Typography>
+                                        <ButtonWrapper>
+                                            <Button variant="contained" color="primary" onClick={handleFileUpload}>Save</Button>
+                                            <Button variant="contained" color="inherit" onClick={handleCancelClick}>Cancel</Button>
+                                        </ButtonWrapper>
+                                    </>
+                                )
+                            }
                 </Box>  
                 <Box 
                     sx={{
                         padding: '0 2rem 0 2.5rem',
-                        width: '50%',
+                        width: '45%',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'flex-start',
@@ -90,7 +123,7 @@ const Account = () => {
                         variant="h5"
                         component="div"
                         gutterBottom
-                        sx={{fontWeight: 300}}
+                        sx={{fontWeight: 300, marginTop: '10px'}}
                     >
                         Username: { username }
                     </Typography>
@@ -101,27 +134,6 @@ const Account = () => {
                         sx={{fontWeight: 300}}
                     >
                         Email: { email }
-                    </Typography>
-                    <Typography
-                        variant="h5"
-                        component="div"
-                        gutterBottom
-                        sx={{fontWeight: 300}}
-                    >
-                        Change avatar: 
-                        <input 
-                            type="file" 
-                            onChange={handleFileChange}
-                            accept="image/*"
-                        />
-                            <Button 
-                                variant="outlined" 
-                                component="span" 
-                                style={{marginLeft: '10px'}} 
-                                onClick={handleFileUpload}
-                            >
-                                Upload
-                            </Button>
                     </Typography>
                 </Box>
             </Box>

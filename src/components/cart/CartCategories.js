@@ -1,6 +1,5 @@
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import styled from 'styled-components';
+import { Content, Span } from './CartCategories.styled';
 
 const CartCategories = () => {
     return (
@@ -8,43 +7,32 @@ const CartCategories = () => {
             <Content>
                 <Typography
                     variant="h6"
+                    gutterBottom
                 >
-                    item
+                    product
                 </Typography>
                 <Typography
                     variant="h6"
+                    gutterBottom
                 >
                     price
                 </Typography>
                 <Typography
                     variant="h6"
+                    gutterBottom
                 >
                     quantity
                 </Typography>
                 <Typography
                     variant="h6"
+                    gutterBottom
                 >
                     subtotal
                 </Typography>
-                <Span></Span>
+                <Span />
             </Content>
-            <Divider />
         </>
     )
 }
-
-
-
-const Content = styled.div`
-    display: grid;
-    grid-template-columns: 316px 1fr 1fr 1fr auto;
-    justify-items: center;
-    column-gap: 1rem;
-`;
-
-const Span = styled.span`
-    width: 2rem;
-    height: 2rem;
-`;
 
 export default CartCategories;

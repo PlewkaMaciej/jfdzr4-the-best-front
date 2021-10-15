@@ -23,8 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock*
 
-AmountButtons.js
-CartItem.js
 Cart2.js
 CartCategories2.js
 CartItem2.js

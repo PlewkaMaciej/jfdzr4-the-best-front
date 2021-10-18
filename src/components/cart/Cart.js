@@ -1,68 +1,86 @@
-import { Link } from 'react-router-dom';
-import CartCategories from './CartCategories';
-import CartSummary from './CartSummary';
-import { Wrapper } from './Cart.styled';
-import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';
-import CartItem from './CartItem';
-
+import { Link } from "react-router-dom";
+import CartCategories from "./CartCategories";
+import CartSummary from "./CartSummary";
+import { Wrapper } from "./Cart.styled";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import CartItem from "./CartItem";
+import Fab from "@mui/material/Fab";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EmptyCartList from "./EmptyCartList";
 
 const Cart = () => {
+  const cartItems = true;
 
-    return (
-        <Wrapper sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <CartCategories />
-        <Divider />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-        <Divider />
-        <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '3rem'
-        }}>
-            <Link to="/">
-                continue shopping
-            </Link>
-            <button
-                type='button'
-                // onClick={clearCart}
-            >
-                clear shopping cart
-            </button>
-        </Box>
-        <Box sx={{
-                display: 'flex',
-                justifyContent: 'flex-end'
+  return (
+    <Wrapper
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      {cartItems ? (
+        <>
+          <CartCategories />
+          <Divider />
+          <CartItem />
+          <CartItem />
+          <Divider />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "3rem",
             }}
-        >
+          >
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <Fab
+                // onClick={handleBack}
+                variant="extended"
+                color="primary"
+                aria-label="continue shopping"
+                sx={{
+                  fontSize: ".8rem",
+                }}
+              >
+                <AddShoppingCartIcon
+                  sx={{
+                    fontSize: "1rem",
+                    mr: 1,
+                  }}
+                />
+                continue shopping
+              </Fab>
+            </Link>
+            <Fab
+              // onClick={handleBack}
+              variant="extended"
+              aria-label="clear cart"
+              sx={{
+                fontSize: ".8rem",
+              }}
+            >
+              <DeleteOutlineIcon
+                sx={{
+                  fontSize: "1rem",
+                  mr: 1,
+                }}
+              />
+              clear shopping cart
+            </Fab>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <CartSummary />
-        </Box>
-        </Wrapper>
-    )
-}
+          </Box>
+        </>
+      ) : (
+        <EmptyCartList />
+      )}
+    </Wrapper>
+  );
+};
 
-// const Wrapper = styled.section`
-//   .link-container {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-top: 2rem;
-//   }
-//   .link-btn {
-//     background: transparent;
-//     border-color: transparent;
-//     text-transform: capitalize;
-//     padding: 0.25rem 0.5rem;
-//     background: var(--clr-primary-5);
-//     color: var(--clr-white);
-//     border-radius: var(--radius);
-//     letter-spacing: var(--spacing);
-//     font-weight: 400;
-//     cursor: pointer;
-//   }
-//   .clear-btn {
-//     background: var(--clr-black);
-//   }
-// `
 export default Cart;

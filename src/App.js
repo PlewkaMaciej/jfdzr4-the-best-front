@@ -1,17 +1,16 @@
-import Navigation from './components/navigation/Navigation';
-import Content from './components/Content';
-import { UserContextProvider } from './controllers/UserContext';
-import Wrapper from './components/auxiliaries/Wrapper';
+import Navigation from "./components/navigation/Navigation";
+import Content from "./components/Content";
+import { UserContextProvider } from "./controllers/UserContext";
+import Wrapper from "./components/auxiliaries/Wrapper";
 
 function App() {
   return (
     <UserContextProvider>
       <Navigation />
-      <Wrapper> 
-        <Content />   
+      <Wrapper>
+        <Content />
       </Wrapper>
     </UserContextProvider>
-    
   );
 }
 

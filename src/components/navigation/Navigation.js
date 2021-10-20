@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../logo.png";
 import { DropdownMenu } from "./DropdownMenu";
 import { LogoWrapper, ButtonsWrapper } from "./Navigation.styled";
+import { useCartState } from "../../controllers/CartContext";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import RecommendOutlinedIcon from "@mui/icons-material/RecommendOutlined";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Badge from "@mui/material/Badge";
 
 const Navigation = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -54,6 +56,8 @@ const Navigation = () => {
       },
     },
   }));
+
+  const { totalAmount } = useCartState();
 
   return (
     <AppBar position="fixed">
@@ -147,7 +151,11 @@ const Navigation = () => {
                   boxShadow: "0 0 5px #1c54b2",
                 },
               }}
-              startIcon={<AddShoppingCartIcon />}
+              startIcon={
+                <Badge badgeContent={totalAmount} color="warning" showZero>
+                  <AddShoppingCartIcon />
+                </Badge>
+              }
             >
               Cart
             </Button>

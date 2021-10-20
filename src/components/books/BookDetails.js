@@ -87,7 +87,6 @@ const BookDetails = () => {
             <Fab
               onClick={handleBack}
               variant="extended"
-              // color="primary"
               aria-label="go back"
               sx={{
                 alignSelf: "flex-end",

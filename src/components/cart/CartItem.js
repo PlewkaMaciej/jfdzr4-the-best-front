@@ -6,9 +6,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import IconButton from "@mui/material/IconButton";
 import { ItemDetails, Wrapper } from "./CartItem.styled";
 
-const CartItem = () => {
-  const amount = 5;
-  const price = 17.99;
+const CartItem = ({id, title, author, price, amount, imgUrl}) => {
 
   const increase = () => {};
   const decrease = () => {};
@@ -17,19 +15,19 @@ const CartItem = () => {
     <Wrapper>
       <ItemDetails>
         <Avatar
-          src=""
-          alt="title"
+          src={imgUrl}
+          alt={title}
           variant="square"
           sx={{ width: 64, height: 64 }}
         />
         <Box>
           <Typography variant="body1">
-            title: Kobieta na krańcu świata
+            title: {title}
           </Typography>
-          <Typography variant="body1">author: Martyna Wojciechowska</Typography>
+          <Typography variant="body1">author: {author}</Typography>
         </Box>
       </ItemDetails>
-      <Typography variant="body1">{price} zł</Typography>
+      <Typography variant="body1">{price.toFixed(2)} zł</Typography>
       <AmountButtons amount={amount} increase={increase} decrease={decrease} />
       <Typography variant="body1" sx={{ fontWeight: 700 }}>
         {(price * amount).toFixed(2)} zł

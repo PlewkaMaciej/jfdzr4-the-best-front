@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
+import { useCartDispatch } from "../../controllers/CartContext";
 
 const useStyles = makeStyles({
   link: {
@@ -25,10 +26,14 @@ const useStyles = makeStyles({
   },
 });
 
-const BookCard = ({ title, author, price, id, coverName, description }) => {
+const BookCard = ({ title, author, price, id, coverName, description, copies }) => {
   const classes = useStyles();
 
   const [imgUrl, setImgUrl] = useState("");
+
+  const { addToCart } = useCartDispatch();
+
+  const amount = 1;
 
   useEffect(() => {
     getDownloadURL(ref(storage, `covers/${id}/${coverName}`))
@@ -107,8 +112,8 @@ const BookCard = ({ title, author, price, id, coverName, description }) => {
         <Fab
           variant="extended"
           color="primary"
-          type="submit"
           aria-label="add to cart"
+          onClick={() => addToCart(id, title, author, price, amount, imgUrl)}
         >
           <AddShoppingCartIcon sx={{ mr: 1 }} />
           Add to Cart

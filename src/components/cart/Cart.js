@@ -9,20 +9,24 @@ import Fab from "@mui/material/Fab";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EmptyCartList from "./EmptyCartList";
+import { useCartState } from "../../controllers/CartContext";
 
 const Cart = () => {
-  const cartItems = true;
+  const cartState = useCartState();
+  console.log(cartState)
+  const { cartItems } = cartState;
 
   return (
     <Wrapper
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      {cartItems ? (
+      {cartItems.length > 0 ? (
         <>
           <CartCategories />
           <Divider />
-          <CartItem />
-          <CartItem />
+          {cartItems.map(item => {
+            return <CartItem key={item.id} {...item} />
+          })}
           <Divider />
           <Box
             sx={{

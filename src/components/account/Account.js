@@ -21,8 +21,6 @@ const Account = () => {
     history.push("/");
   };
 
-  //po zrezygnowaniu z uploadu nie zeruje się w inpucie plik na pozycji 0
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };

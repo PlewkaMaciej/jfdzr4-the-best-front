@@ -7,12 +7,15 @@ export const cartReducer = (state, action) => {
         action.payload;
       const tempItem = state.cartItems.find((item) => item.id === id);
       if (tempItem) {
+        let addToTotal = 0;
         const tempCartItems = state.cartItems.map((cartItem) => {
           if (cartItem.id === id) {
             let newAmount = cartItem.amount + amount;
             if (newAmount > copies) {
               newAmount = copies;
+              addToTotal = copies;
             }
+            addToTotal = amount;
             return { ...cartItem, amount: newAmount };
           }
           return cartItem;
@@ -20,14 +23,18 @@ export const cartReducer = (state, action) => {
         return {
           ...state,
           cartItems: tempCartItems,
-          totalAmount: state.totalAmount + amount,
+          totalAmount: state.totalAmount + addToTotal,
         };
       } else {
-        const newItem = { id, title, author, price, amount, imgUrl };
+        const newItem = { id, title, author, price, amount, imgUrl, copies };
+        let addToTotal = amount;
+        if (amount >= copies) {
+          addToTotal = copies;
+        }
         return {
           ...state,
           cartItems: [...state.cartItems, newItem],
-          totalAmount: state.totalAmount + amount,
+          totalAmount: state.totalAmount + addToTotal,
         };
       }
     default:

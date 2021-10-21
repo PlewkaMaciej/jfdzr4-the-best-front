@@ -23,8 +23,8 @@ const Cart = () => {
         <>
           <CartCategories />
           <Divider />
-          {cartItems.map(item => {
-            return <CartItem key={item.id} {...item} />
+          {cartItems.map((item) => {
+            return <CartItem key={item.id} {...item} />;
           })}
           <Divider />
           <Box

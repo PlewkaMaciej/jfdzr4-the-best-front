@@ -13,7 +13,6 @@ import { useCartState } from "../../controllers/CartContext";
 
 const Cart = () => {
   const cartState = useCartState();
-  console.log(cartState)
   const { cartItems } = cartState;
 
   return (

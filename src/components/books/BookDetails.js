@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../index";
 import Spinner from "../auxiliaries/Spinner";
+import { useCartDispatch } from "../../controllers/CartContext";
 import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -13,9 +14,11 @@ import Typography from "@mui/material/Typography";
 
 const BookDetails = () => {
   const { id } = useParams();
+  const amount = 1;
   const [data, setData] = useState(null);
   const [imgUrl, setImgUrl] = useState("");
   const history = useHistory();
+  const { addToCart } = useCartDispatch()
 
   useEffect(() => {
     const docRef = doc(db, "books", id);
@@ -37,6 +40,11 @@ const BookDetails = () => {
   const handleBack = () => {
     history.push("/");
   };
+
+  const handleAddToCart = () => {
+    const { title, author, price, copies } = data;
+    addToCart(id, title, author, price, amount, imgUrl, copies);
+  }
 
   return (
     <>
@@ -134,6 +142,7 @@ const BookDetails = () => {
                 color="primary"
                 type="submit"
                 aria-label="add to cart"
+                onClick={handleAddToCart}
               >
                 <AddShoppingCartIcon sx={{ mr: 1 }} />
                 Add to Cart

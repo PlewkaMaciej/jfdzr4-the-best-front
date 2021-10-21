@@ -37,7 +37,6 @@ const Cart = () => {
           >
             <Link to="/" style={{ textDecoration: "none" }}>
               <Fab
-                // onClick={handleBack}
                 variant="extended"
                 color="primary"
                 aria-label="continue shopping"

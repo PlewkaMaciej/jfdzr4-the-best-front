@@ -1,5 +1,5 @@
 import { createContext, useReducer, useContext } from "react";
-import { reducer } from "../components/reducers/cartReducer";
+import { cartReducer } from "../components/reducers/cartReducer";
 import { ADD_TO_CART } from "../components/reducers/cartReducerActions";
 
 const CartStateContext = createContext();
@@ -12,12 +12,12 @@ const initialState = {
 };
 
 export const CartContextProvider = ({ children }) => {
-  const [cartState, dispatch] = useReducer(reducer, initialState);
+  const [cartState, dispatch] = useReducer(cartReducer, initialState);
 
-  const addToCart = (id, title, author, price, amount, imgUrl) => {
+  const addToCart = (id, title, author, price, amount, imgUrl, copies) => {
     dispatch({
       type: ADD_TO_CART,
-      payload: { id, title, author, price, amount, imgUrl },
+      payload: { id, title, author, price, amount, imgUrl, copies },
     });
   };
 

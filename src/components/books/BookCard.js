@@ -113,7 +113,7 @@ const BookCard = ({ title, author, price, id, coverName, description, copies }) 
           variant="extended"
           color="primary"
           aria-label="add to cart"
-          onClick={() => addToCart(id, title, author, price, amount, imgUrl)}
+          onClick={() => addToCart(id, title, author, price, amount, imgUrl, copies)}
         >
           <AddShoppingCartIcon sx={{ mr: 1 }} />
           Add to Cart

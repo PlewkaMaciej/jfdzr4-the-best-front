@@ -8,10 +8,15 @@ import { ItemDetails, Wrapper } from "./CartItem.styled";
 import { useCartDispatch } from "../../controllers/CartContext";
 
 const CartItem = ({ id, title, author, price, amount, imgUrl, copies }) => {
-  const increase = () => {};
-  const decrease = () => {};
+  const { removeItemFromCart, toggleAmount } = useCartDispatch();
 
-  const { removeItemFromCart } = useCartDispatch();
+  const increaseAmount = () => {
+    toggleAmount(id, "increase");
+  };
+
+  const decreaseAmount = () => {
+    toggleAmount(id, "decrease");
+  };
 
   return (
     <Wrapper>
@@ -31,15 +36,14 @@ const CartItem = ({ id, title, author, price, amount, imgUrl, copies }) => {
       <AmountButtons
         amount={amount}
         copies={copies}
-        increase={increase}
-        decrease={decrease}
+        increaseAmount={increaseAmount}
+        decreaseAmount={decreaseAmount}
+        id={id}
       />
       <Typography variant="body1" sx={{ fontWeight: 700 }}>
         {(price * amount).toFixed(2)} zł
       </Typography>
-      <IconButton
-      onClick={() => removeItemFromCart(id)}
-      >
+      <IconButton onClick={() => removeItemFromCart(id)}>
         <DeleteOutlineIcon
           color="warning"
           sx={{ backgroundColor: "transparent" }}

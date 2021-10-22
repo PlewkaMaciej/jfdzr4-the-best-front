@@ -3,6 +3,7 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
   REMOVE_FROM_CART,
+  TOGGLE_AMOUNT_OF_COPIES,
 } from "./cartReducerActions";
 
 export const cartReducer = (state, action) => {
@@ -41,6 +42,38 @@ export const cartReducer = (state, action) => {
       return {
         ...state,
         cartItems: tempCartItems,
+      };
+
+    case TOGGLE_AMOUNT_OF_COPIES:
+      const { itemId, toggleAction } = action.payload;
+      const tempCart = state.cartItems.map((item) => {
+        if (item.id === itemId) {
+          if (toggleAction === "increase") {
+            let newAmount = item.amount + 1;
+            if (newAmount >= item.copies) {
+              newAmount = item.copies;
+            }
+            return {
+              ...item,
+              amount: newAmount,
+            };
+          }
+          if (toggleAction === "decrease") {
+            let newAmount = item.amount - 1;
+            if (newAmount < 1) {
+              newAmount = 1;
+            }
+            return {
+              ...item,
+              amount: newAmount,
+            };
+          }
+        }
+        return item;
+      });
+      return {
+        ...state,
+        cartItems: tempCart,
       };
 
     case COUNT_CART_TOTALS:

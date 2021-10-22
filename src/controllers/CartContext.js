@@ -5,6 +5,7 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
   REMOVE_FROM_CART,
+  TOGGLE_AMOUNT_OF_COPIES,
 } from "../components/reducers/cartReducerActions";
 
 const CartStateContext = createContext();
@@ -44,6 +45,14 @@ export const CartContextProvider = ({ children }) => {
     countTotals();
   };
 
+  const toggleAmount = (itemId, toggleAction) => {
+    dispatch({
+      type: TOGGLE_AMOUNT_OF_COPIES,
+      payload: { itemId, toggleAction },
+    });
+    countTotals();
+  };
+
   return (
     <CartDispatchContext.Provider
       value={{
@@ -51,6 +60,7 @@ export const CartContextProvider = ({ children }) => {
         addToCart,
         removeItemFromCart,
         clearCart,
+        toggleAmount,
         countTotals,
       }}
     >

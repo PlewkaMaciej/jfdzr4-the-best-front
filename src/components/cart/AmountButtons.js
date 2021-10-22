@@ -4,7 +4,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Wrapper } from "./AmountButtons.styled";
 
-const AmountButtons = ({ increase, decrease, amount, copies }) => {
+const AmountButtons = ({
+  increaseAmount,
+  decreaseAmount,
+  amount,
+  copies,
+}) => {
   return (
     <Wrapper>
       {amount <= 1 ? (
@@ -12,14 +17,14 @@ const AmountButtons = ({ increase, decrease, amount, copies }) => {
           <RemoveCircleOutlineOutlinedIcon sx={{ fontSize: "1rem" }} />
         </IconButton>
       ) : (
-        <IconButton onClick={decrease}>
+        <IconButton onClick={() => decreaseAmount()}>
           <RemoveCircleOutlineOutlinedIcon
             sx={{ fontSize: "1rem" }}
             color="warning"
           />
         </IconButton>
       )}
-      <Typography sx={{ fontWeight: 700, fontSize: "1.2rem" }}>
+      <Typography sx={{ fontWeight: 700, fontSize: "1.3rem" }}>
         {amount}
       </Typography>
       {amount >= copies ? (
@@ -27,7 +32,7 @@ const AmountButtons = ({ increase, decrease, amount, copies }) => {
           <AddCircleOutlineOutlinedIcon sx={{ fontSize: "1rem" }} />
         </IconButton>
       ) : (
-        <IconButton onClick={increase}>
+        <IconButton onClick={() => increaseAmount()}>
           <AddCircleOutlineOutlinedIcon
             sx={{ fontSize: "1rem" }}
             color="primary"

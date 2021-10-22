@@ -9,11 +9,11 @@ import Fab from "@mui/material/Fab";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EmptyCartList from "./EmptyCartList";
-import { useCartState } from "../../controllers/CartContext";
+import { useCartDispatch, useCartState } from "../../controllers/CartContext";
 
 const Cart = () => {
-  const cartState = useCartState();
-  const { cartItems } = cartState;
+  const { cartItems } = useCartState();
+  const { clearCart } = useCartDispatch();
 
   return (
     <Wrapper
@@ -53,7 +53,7 @@ const Cart = () => {
               </Fab>
             </Link>
             <Fab
-              // onClick={handleBack}
+              onClick={() => clearCart()}
               variant="extended"
               aria-label="clear cart"
               sx={{

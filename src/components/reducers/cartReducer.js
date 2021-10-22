@@ -1,4 +1,4 @@
-import { ADD_TO_CART, COUNT_CART_TOTALS } from "./cartReducerActions";
+import { ADD_TO_CART, CLEAR_CART, COUNT_CART_TOTALS } from "./cartReducerActions";
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
@@ -43,6 +43,9 @@ export const cartReducer = (state, action) => {
         }
       );
       return { ...state, totalItems, totalAmount };
+
+    case CLEAR_CART:
+      return { ...state, cartItems: [] };
 
     default:
       console.log(`invalid action type: ${action.type}`);

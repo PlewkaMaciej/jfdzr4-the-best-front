@@ -4,6 +4,7 @@ import {
   ADD_TO_CART,
   CLEAR_CART,
   COUNT_CART_TOTALS,
+  REMOVE_FROM_CART,
 } from "../components/reducers/cartReducerActions";
 
 const CartStateContext = createContext();
@@ -33,6 +34,11 @@ export const CartContextProvider = ({ children }) => {
     countTotals();
   };
 
+  const removeItemFromCart = (id) => {
+    dispatch({ type: REMOVE_FROM_CART, payload: id });
+    countTotals();
+  };
+
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
     countTotals();
@@ -40,7 +46,13 @@ export const CartContextProvider = ({ children }) => {
 
   return (
     <CartDispatchContext.Provider
-      value={{ dispatch, addToCart, clearCart, countTotals }}
+      value={{
+        dispatch,
+        addToCart,
+        removeItemFromCart,
+        clearCart,
+        countTotals,
+      }}
     >
       <CartStateContext.Provider value={cartState}>
         {children}

@@ -1,4 +1,9 @@
-import { ADD_TO_CART, CLEAR_CART, COUNT_CART_TOTALS } from "./cartReducerActions";
+import {
+  ADD_TO_CART,
+  CLEAR_CART,
+  COUNT_CART_TOTALS,
+  REMOVE_FROM_CART,
+} from "./cartReducerActions";
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
@@ -28,6 +33,15 @@ export const cartReducer = (state, action) => {
           cartItems: [...state.cartItems, newItem],
         };
       }
+
+    case REMOVE_FROM_CART:
+      const tempCartItems = state.cartItems.filter(
+        (item) => item.id !== action.payload
+      );
+      return {
+        ...state,
+        cartItems: tempCartItems,
+      };
 
     case COUNT_CART_TOTALS:
       const { totalItems, totalAmount } = state.cartItems.reduce(

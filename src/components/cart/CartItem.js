@@ -5,10 +5,13 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import IconButton from "@mui/material/IconButton";
 import { ItemDetails, Wrapper } from "./CartItem.styled";
+import { useCartDispatch } from "../../controllers/CartContext";
 
 const CartItem = ({ id, title, author, price, amount, imgUrl, copies }) => {
   const increase = () => {};
   const decrease = () => {};
+
+  const { removeItemFromCart } = useCartDispatch();
 
   return (
     <Wrapper>
@@ -35,7 +38,7 @@ const CartItem = ({ id, title, author, price, amount, imgUrl, copies }) => {
         {(price * amount).toFixed(2)} zł
       </Typography>
       <IconButton
-      // onClick={() => removeItem(id)}
+      onClick={() => removeItemFromCart(id)}
       >
         <DeleteOutlineIcon
           color="warning"

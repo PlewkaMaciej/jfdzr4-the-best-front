@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "./cartReducerActions";
+import { ADD_TO_CART, COUNT_CART_TOTALS } from "./cartReducerActions";
 
 export const cartReducer = (state, action) => {
   switch (action.type) {
@@ -7,15 +7,12 @@ export const cartReducer = (state, action) => {
         action.payload;
       const tempItem = state.cartItems.find((item) => item.id === id);
       if (tempItem) {
-        let addToTotal = 0;
         const tempCartItems = state.cartItems.map((cartItem) => {
           if (cartItem.id === id) {
             let newAmount = cartItem.amount + amount;
             if (newAmount > copies) {
               newAmount = copies;
-              addToTotal = copies;
             }
-            addToTotal = amount;
             return { ...cartItem, amount: newAmount };
           }
           return cartItem;
@@ -23,20 +20,31 @@ export const cartReducer = (state, action) => {
         return {
           ...state,
           cartItems: tempCartItems,
-          totalAmount: state.totalAmount + addToTotal,
         };
       } else {
         const newItem = { id, title, author, price, amount, imgUrl, copies };
-        let addToTotal = amount;
-        if (amount >= copies) {
-          addToTotal = copies;
-        }
         return {
           ...state,
           cartItems: [...state.cartItems, newItem],
-          totalAmount: state.totalAmount + addToTotal,
         };
       }
+
+    case COUNT_CART_TOTALS:
+      const { totalItems, totalAmount } = state.cartItems.reduce(
+        (total, cartItem) => {
+          const { amount, price } = cartItem;
+
+          total.totalItems += amount;
+          total.totalAmount += price * amount;
+          return total;
+        },
+        {
+          totalItems: 0,
+          totalImount: 0,
+        }
+      );
+      return { ...state, totalItems, totalAmount };
+
     default:
       console.log(`invalid action type: ${action.type}`);
       return state;

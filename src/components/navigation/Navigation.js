@@ -57,7 +57,7 @@ const Navigation = () => {
     },
   }));
 
-  const { totalAmount } = useCartState();
+  const { totalItems } = useCartState();
 
   return (
     <AppBar position="fixed">
@@ -152,7 +152,7 @@ const Navigation = () => {
                 },
               }}
               startIcon={
-                <Badge badgeContent={totalAmount} color="warning" showZero>
+                <Badge badgeContent={totalItems} color="warning" showZero>
                   <AddShoppingCartIcon />
                 </Badge>
               }

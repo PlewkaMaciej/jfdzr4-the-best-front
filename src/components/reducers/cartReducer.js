@@ -33,14 +33,13 @@ export const cartReducer = (state, action) => {
       const { totalItems, totalAmount } = state.cartItems.reduce(
         (total, cartItem) => {
           const { amount, price } = cartItem;
-
           total.totalItems += amount;
-          total.totalAmount += price * amount;
+          total.totalAmount += amount * price;
           return total;
         },
         {
           totalItems: 0,
-          totalImount: 0,
+          totalAmount: 0,
         }
       );
       return { ...state, totalItems, totalAmount };

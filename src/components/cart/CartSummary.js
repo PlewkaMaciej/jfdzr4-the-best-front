@@ -4,8 +4,11 @@ import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import SendIcon from "@mui/icons-material/Send";
 import { Wrapper, ItemRight, ItemLeft } from "./CartSummary.styled";
+import { useCartState } from "../../controllers/CartContext";
 
 const CartSummary = () => {
+
+  const { totalAmount, shippingFee } = useCartState();
   return (
     <Wrapper>
       <Grid container rowSpacing={2}>
@@ -13,13 +16,13 @@ const CartSummary = () => {
           <ItemLeft>subtotal :</ItemLeft>
         </Grid>
         <Grid item xs={6}>
-          <ItemRight>128,35 zł</ItemRight>
+          <ItemRight>{totalAmount.toFixed(2)} zł</ItemRight>
         </Grid>
         <Grid item xs={6}>
           <ItemLeft>shipping fee :</ItemLeft>
         </Grid>
         <Grid item xs={6}>
-          <ItemRight>9,99 zł</ItemRight>
+          <ItemRight>{shippingFee.toFixed(2)} zł</ItemRight>
         </Grid>
         <Grid item xs={12}>
           <Divider />
@@ -31,7 +34,7 @@ const CartSummary = () => {
         </Grid>
         <Grid item xs={6}>
           <ItemRight gutterBottom fontSize="1.3rem" fontWeight="700">
-            137,34 zł
+            {(totalAmount + shippingFee).toFixed(2)} zł
           </ItemRight>
         </Grid>
         <Grid

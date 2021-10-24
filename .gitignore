@@ -22,3 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 yarn.lock*
+
+Cart2.js
+CartCategories2.js
+CartItem2.js
+CartSummary2.js
+helpers2.js

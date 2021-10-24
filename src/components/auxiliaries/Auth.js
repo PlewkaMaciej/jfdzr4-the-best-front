@@ -1,19 +1,15 @@
-import { useContext } from 'react';
-import { Redirect } from 'react-router';
-import { UserContext } from '../../controllers/UserContext';
+import { useContext } from "react";
+import { Redirect } from "react-router";
+import { UserContext } from "../../controllers/UserContext";
 
 const Auth = ({ children }) => {
-    const { uid } = useContext(UserContext);
-    
-    if (uid) {
-        return (
-            <>
-                { children }
-            </>
-        )
-    }
+  const { uid } = useContext(UserContext);
 
-    return <Redirect to="/" />
-}
+  if (uid) {
+    return <>{children}</>;
+  }
+
+  return <Redirect to="/" />;
+};
 
 export default Auth;

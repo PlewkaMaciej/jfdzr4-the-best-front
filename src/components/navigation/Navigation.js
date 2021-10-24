@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../logo.png";
 import { DropdownMenu } from "./DropdownMenu";
 import { LogoWrapper, ButtonsWrapper } from "./Navigation.styled";
 import { useCartState } from "../../controllers/CartContext";
+import "./Navigation.css";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -59,6 +60,9 @@ const Navigation = () => {
 
   const { totalItems } = useCartState();
 
+  const { pathname } = useLocation();
+  const splitLocation = pathname.split("/");
+
   return (
     <AppBar position="fixed">
       <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -88,7 +92,11 @@ const Navigation = () => {
           />
         </Search>
         <ButtonsWrapper>
-          <Link to="/about" style={{ textDecoration: "none" }}>
+          <Link
+            to="/about"
+            style={{ textDecoration: "none" }}
+            className={splitLocation[1] === "about" ? "active--light" : ""}
+          >
             <Button
               variant="text"
               sx={{
@@ -105,7 +113,11 @@ const Navigation = () => {
               About
             </Button>
           </Link>
-          <Link to="/forum" style={{ textDecoration: "none" }}>
+          <Link
+            to="/forum"
+            style={{ textDecoration: "none" }}
+            className={splitLocation[1] === "forum" ? "active--light" : ""}
+          >
             <Button
               variant="text"
               sx={{
@@ -122,7 +134,11 @@ const Navigation = () => {
               Forum
             </Button>
           </Link>
-          <Link to="/recommend" style={{ textDecoration: "none" }}>
+          <Link
+            to="/recommend"
+            style={{ textDecoration: "none" }}
+            className={splitLocation[1] === "recommend" ? "active--light" : ""}
+          >
             <Button
               variant="text"
               sx={{
@@ -139,7 +155,11 @@ const Navigation = () => {
               Recommend
             </Button>
           </Link>
-          <Link to="/cart" style={{ textDecoration: "none" }}>
+          <Link
+            to="/cart"
+            style={{ textDecoration: "none" }}
+            className={splitLocation[1] === "cart" ? "active--light" : ""}
+          >
             <Button
               variant="text"
               sx={{

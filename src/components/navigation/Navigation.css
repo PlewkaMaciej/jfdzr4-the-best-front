@@ -1,0 +1,7 @@
+.active--light {
+  border-bottom: 1px solid #fff;
+}
+
+.active--dark {
+    background-color: #ddd;
+}

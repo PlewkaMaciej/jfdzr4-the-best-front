@@ -16,11 +16,14 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import Logout from "@mui/icons-material/Logout";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useMessageContext } from "../../controllers/MessageContext";
 
 export const DropdownMenu = () => {
   const { uid, username, avatarUrl } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const { setOpen, setMessage, setColor } = useMessageContext(); 
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -31,6 +34,9 @@ export const DropdownMenu = () => {
   };
 
   const handleSignOut = () => {
+    setMessage("user signed out");
+    setColor("error");
+    setOpen(true);
     signOut(auth);
   };
 

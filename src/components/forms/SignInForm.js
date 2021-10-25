@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
+import { useMessageContext } from "../../controllers/MessageContext";
 
 const SignInForm = () => {
   const classes = useStyles();
@@ -22,6 +23,8 @@ const SignInForm = () => {
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
+    const { setOpen, setMessage, setColor } = useMessageContext();
 
   const handleChange = (e) => {
     setFormData({
@@ -43,16 +46,15 @@ const SignInForm = () => {
     if (email && password) {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          setFormData({
-            email: "",
-            password: "",
-          });
+          setMessage("user successfully signed in");
+          setColor("success");
+          setOpen(true);
           setShouldRedirect(true);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          setMessage(error.message);
+          setColor("error");
+          setOpen(true);
         });
     }
   };

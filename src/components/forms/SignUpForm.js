@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import { auth, db } from "../../index";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { useMessageContext } from "../../controllers/MessageContext";
 import { useStyles } from "./Form.styled";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -25,6 +26,8 @@ const SignUpForm = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
+
+  const { setOpen, setMessage, setColor } = useMessageContext();
 
   const handleChange = (e) => {
     setFormData({
@@ -56,12 +59,15 @@ const SignUpForm = () => {
           });
         })
         .then(() => {
+          setMessage("new account successfully created");
+          setColor("success");
+          setOpen(true);
           setShouldRedirect(true);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          setMessage(error.message);
+          setColor("error");
+          setOpen(true);
         });
     }
   };

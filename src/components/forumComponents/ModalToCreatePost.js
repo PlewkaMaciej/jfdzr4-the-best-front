@@ -50,6 +50,7 @@ export const ModalToCreatePost = ({ setStateOfModal }) => {
     addDoc(collection(db, "posts"), {
       title: formData.title,
       text: formData.text,
+      uidOfUser: uid,
     });
   };
   const handleChange = (e) => {

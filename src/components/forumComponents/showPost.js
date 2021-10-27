@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../index";
-export const ShowPosts = ({ title, text, id, uidOfUser }) => {
+export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
   const deletePost = () => {
     deleteDoc(doc(db, "posts", id));
   };
@@ -52,9 +52,13 @@ export const ShowPosts = ({ title, text, id, uidOfUser }) => {
       color: "white",
     },
     deleteButton: {
-      position: "relative",
-      left: "500px",
+    
     },
+    nicknameAndButton:{
+      display:"flex",
+      justifyContent:"space-between",
+      width:"600px"
+    }
   });
   const classes = useStyles();
 
@@ -69,12 +73,13 @@ export const ShowPosts = ({ title, text, id, uidOfUser }) => {
               src={avatarUrl}
               sx={{ boxShadow: "2px 2px 10px rgba(0, 0, 0, .75)" }}
             />
+            <CardContent className={classes.nicknameAndButton}>
             <Typography
               className={classes.typographyNickname}
               variant="h5"
               component="h5"
             >
-              {username}
+              {postCreator}
             </Typography>
             {uid ===uidOfUser&&(
                 <Button
@@ -88,6 +93,7 @@ export const ShowPosts = ({ title, text, id, uidOfUser }) => {
                   Delete Post
                 </Button>
               )}
+              </CardContent>
           </CardContent>
           <Typography className={classes.hours} variant="p" component="p">
             hours ago

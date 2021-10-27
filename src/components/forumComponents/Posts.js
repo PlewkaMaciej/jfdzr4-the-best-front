@@ -34,7 +34,7 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser}/>
+              <ShowPosts key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator}/>
             );
           })}
         </>

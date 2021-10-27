@@ -51,6 +51,7 @@ export const ModalToCreatePost = ({ setStateOfModal }) => {
       title: formData.title,
       text: formData.text,
       uidOfUser: uid,
+      postCreator: username,
     });
   };
   const handleChange = (e) => {

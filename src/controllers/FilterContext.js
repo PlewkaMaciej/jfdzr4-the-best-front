@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer} from "react";
 import { createContext, useContext } from "react";
 import { filterReducer } from "../components/reducers/filterReducer";
 import {
+  FILTER_PRODUCTS,
   LOAD_PRODUCTS_START,
   LOAD_PRODUCTS_SUCCESS,
 } from "../components/reducers/filterReducerActions";
@@ -40,12 +41,17 @@ export const FilterContextProvider = ({ children }) => {
     );
   }, [setColor, setMessage, setOpen]);
 
+  const filterProducts = (text) => {
+    dispatch({ type: FILTER_PRODUCTS, payload: text });
+  };
+
   useEffect(() => {
     loadProductsFromFirebase();
   }, [loadProductsFromFirebase]);
 
+
   return (
-    <FilterContext.Provider value={filterState}>
+    <FilterContext.Provider value={{ ...filterState, filterProducts }}>
       {children}
     </FilterContext.Provider>
   );

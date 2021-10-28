@@ -10,3 +10,9 @@ export const ButtonsWrapper = styled("div")({
   justifyContent: "center",
   alignItems: "center",
 });
+
+export const ContentWrapper = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});

@@ -5,20 +5,23 @@ import Wrapper from "./components/auxiliaries/Wrapper";
 import { CartContextProvider } from "./controllers/CartContext";
 import { MessageContextProvider } from "./controllers/MessageContext";
 import Message from "./components/auxiliaries/Message";
+import { FilterContextProvider } from "./controllers/FilterContext";
 
 function App() {
   return (
-    <UserContextProvider>
-      <CartContextProvider>
-        <MessageContextProvider>
-          <Navigation />
-          <Message />
-          <Wrapper>
-            <Content />
-          </Wrapper>
-        </MessageContextProvider>
-      </CartContextProvider>
-    </UserContextProvider>
+    <MessageContextProvider>
+      <FilterContextProvider>
+        <UserContextProvider>
+          <CartContextProvider>
+            <Navigation />
+            <Message />
+            <Wrapper>
+              <Content />
+            </Wrapper>
+          </CartContextProvider>
+        </UserContextProvider>
+      </FilterContextProvider>
+    </MessageContextProvider>
   );
 }
 

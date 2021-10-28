@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../index";
+import { useMessageContext } from "../../controllers/MessageContext";
 import { useStyles } from "./Form.styled";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import { useMessageContext } from "../../controllers/MessageContext";
+import Fab from "@mui/material/Fab";
 
 const SignInForm = () => {
   const classes = useStyles();
@@ -24,7 +24,7 @@ const SignInForm = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-    const { setOpen, setMessage, setColor } = useMessageContext();
+  const { setOpen, setMessage, setColor } = useMessageContext();
 
   const handleChange = (e) => {
     setFormData({
@@ -110,15 +110,16 @@ const SignInForm = () => {
             error={passwordError}
             onChange={handleChange}
           />
-          <Button
-            variant="contained"
+          <Fab
+            variant="extended"
             color="primary"
             type="submit"
-            endIcon={<SendIcon />}
-            className={classes.btn}
+            aria-label="sign in"
+            sx={{ width: "30%", alignSelf: "center" }}
           >
             SIGN IN
-          </Button>
+            <SendIcon sx={{ ml: 1, fontSize: "1.2rem" }} />
+          </Fab>
         </form>
         <Typography variant="overline" align="right">
           New to Smart Books?

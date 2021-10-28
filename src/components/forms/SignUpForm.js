@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useMessageContext } from "../../controllers/MessageContext";
 import { useStyles } from "./Form.styled";
-import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import SendIcon from "@mui/icons-material/Send";
@@ -136,15 +136,16 @@ const SignUpForm = () => {
             error={usernameError}
             onChange={handleChange}
           />
-          <Button
-            variant="contained"
+          <Fab
+            variant="extended"
             color="primary"
             type="submit"
-            endIcon={<SendIcon />}
-            className={classes.btn}
+            aria-label="sign in"
+            sx={{ width: "30%", alignSelf: "center" }}
           >
-            SIGN UP
-          </Button>
+            SIGN IN
+            <SendIcon sx={{ ml: 1, fontSize: "1.2rem" }} />
+          </Fab>
         </form>
         <Typography variant="overline" align="right">
           Already have an account?

@@ -18,12 +18,6 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "space-evenly",
   },
-  btn: {
-    marginTop: 10,
-    marginBottom: 30,
-    width: "25%",
-    alignSelf: "center",
-  },
   field: {
     marginTop: 20,
     marginBottom: 20,
@@ -37,7 +31,7 @@ export const useStyles = makeStyles({
     textDecoration: "none",
     color: "#fff",
     backgroundColor: "#2196f3",
-    borderRadius: 5,
+    borderRadius: 10,
     boxShadow: "0 0 2px rgba(0, 0, 0, .1)",
   },
 });

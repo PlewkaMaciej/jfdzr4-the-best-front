@@ -3,12 +3,22 @@ import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { UserContext } from "../../controllers/UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../index";
-export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+export const ShowPosts = ({ title, text, id, uidOfUser, postCreator, url }) => {
+  const [stateOfLikes, setStateOfLikes] = useState(false);
+  const getLike = () => {
+    if (stateOfLikes === false) {
+      setStateOfLikes(true);
+    } else {
+      setStateOfLikes(false);
+    }
+  };
   const deletePost = () => {
     deleteDoc(doc(db, "posts", id));
   };
@@ -28,8 +38,8 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
     typographyTitleAboutBook: {},
     avatar: {
       margin: "10px",
-      width: "55px",
-      height: "55px",
+      width: "60px",
+      height: "60px",
       backgroundColor: "white",
     },
     tittleInMiddle: {
@@ -51,14 +61,19 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
       left: "110px",
       color: "white",
     },
-    deleteButton: {
-    
+    deleteButton: {},
+    nicknameAndButton: {
+      display: "flex",
+      justifyContent: "space-between",
+      width: "600px",
     },
-    nicknameAndButton:{
-      display:"flex",
-      justifyContent:"space-between",
-      width:"600px"
-    }
+    heartForLikes: {
+      marginTop: "175px",
+      marginLeft: "30px",
+      width: "40px",
+      height: "40px",
+      color: "#1976d2",
+    },
   });
   const classes = useStyles();
 
@@ -70,18 +85,18 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
             <Avatar
               className={classes.avatar}
               alt="avatar"
-              src={avatarUrl}
+              src={url}
               sx={{ boxShadow: "2px 2px 10px rgba(0, 0, 0, .75)" }}
             />
             <CardContent className={classes.nicknameAndButton}>
-            <Typography
-              className={classes.typographyNickname}
-              variant="h5"
-              component="h5"
-            >
-              {postCreator}
-            </Typography>
-            {uid ===uidOfUser&&(
+              <Typography
+                className={classes.typographyNickname}
+                variant="h5"
+                component="h5"
+              >
+                {postCreator}
+              </Typography>
+              {uid === uidOfUser && (
                 <Button
                   onClick={deletePost}
                   id={id}
@@ -93,7 +108,7 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
                   Delete Post
                 </Button>
               )}
-              </CardContent>
+            </CardContent>
           </CardContent>
           <Typography className={classes.hours} variant="p" component="p">
             hours ago
@@ -114,6 +129,18 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator }) => {
           >
             {text}
           </Typography>
+          {stateOfLikes === false && (
+            <FavoriteBorderIcon
+              onClick={getLike}
+              className={classes.heartForLikes}
+            ></FavoriteBorderIcon>
+          )}
+          {stateOfLikes === true && (
+            <FavoriteIcon
+              onClick={getLike}
+              className={classes.heartForLikes}
+            ></FavoriteIcon>
+          )}
         </Paper>
       </section>
     </>

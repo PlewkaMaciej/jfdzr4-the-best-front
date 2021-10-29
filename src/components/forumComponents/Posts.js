@@ -13,7 +13,7 @@ export const Posts = () => {
   const { uid, email, username, avatarUrl, setAvatarUrl } =
   useContext(UserContext)
   useEffect(() => {
-    getPosts(setPosts, posts);
+    getPosts(setPosts, uid);
     console.log(posts)
   }, []);
   const changeStatusOfModal = () => {
@@ -34,7 +34,7 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator}/>
+              <ShowPosts key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>

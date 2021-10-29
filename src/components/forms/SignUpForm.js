@@ -56,6 +56,7 @@ const SignUpForm = () => {
           const userRef = doc(db, "users", userCredential.user.uid);
           setDoc(userRef, {
             username,
+            isAvatarDefault: true,
           });
         })
         .then(() => {

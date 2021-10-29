@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../controllers/UserContext";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../index";
+import { storage, db } from "../../index";
+import { doc, updateDoc } from "firebase/firestore";
 import Auth from "../auxiliaries/Auth";
 import { UserAvatar, ButtonWrapper } from "./Account.styled";
 import Box from "@mui/material/Box";
@@ -33,6 +34,10 @@ const Account = () => {
     const storageRef = ref(storage, `avatars/${uid}/`);
     uploadBytes(storageRef, file).then((snapshot) => {
       setFile(null);
+      const userRef = doc(db, "users", uid);
+      updateDoc(userRef, {
+        isAvatarDefault: false,
+      });
       getDownloadURL(snapshot.ref).then((url) => {
         setAvatarUrl(url);
       });

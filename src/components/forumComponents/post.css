@@ -12,3 +12,9 @@
     box-sizing: border-box;
     margin-top: 50px;
 }
+.section-showingposts{
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-top: 50px;
+}

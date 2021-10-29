@@ -1,14 +1,17 @@
 import { Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography"
+import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
+import { UserContext } from "../../controllers/UserContext";
 
-export const ModalToCreatePost = ({ userData, setStateOfModal }) => {
+export const ModalToCreatePost = ({ setStateOfModal }) => {
+  const { uid, email, username, avatarUrl, setAvatarUrl } =
+    useContext(UserContext);
   const useStyles = makeStyles({
     paper: {
       position: "absolute",
@@ -22,20 +25,19 @@ export const ModalToCreatePost = ({ userData, setStateOfModal }) => {
       left: "356px",
       bottom: "20px",
     },
-    typographyHeadingModal:{
-      marginTop:"20px"
+    typographyHeadingModal: {
+      marginTop: "20px",
     },
-    textFieldTitle:{
-      width: "90%", 
+    textFieldTitle: {
+      width: "90%",
     },
-    textFieldText:{
-      width: "90%", 
-      marginTop:"10px"
+    textFieldText: {
+      width: "90%",
+      marginTop: "10px",
     },
-    createPostBtn:{
-      marginTop:"10px"
-    }
-
+    createPostBtn: {
+      marginTop: "10px",
+    },
   });
   const [formData, setFormData] = useState({
     title: "",
@@ -48,6 +50,8 @@ export const ModalToCreatePost = ({ userData, setStateOfModal }) => {
     addDoc(collection(db, "posts"), {
       title: formData.title,
       text: formData.text,
+      uidOfUser: uid,
+      postCreator: username,
     });
   };
   const handleChange = (e) => {
@@ -63,23 +67,26 @@ export const ModalToCreatePost = ({ userData, setStateOfModal }) => {
     <>
       <section className="section-add-new-post">
         <Paper className={classes.paper} elevation={12}>
-          <Typography className={classes.typographyHeadingModal}variant="h3" component="h3">
-          Hello {userData.username}!
+          <Typography
+            className={classes.typographyHeadingModal}
+            variant="h3"
+            component="h3"
+          >
+            Hello {username}!
           </Typography>
-    
+
           <CloseIcon
             onClick={changeStatusOfModal}
             className={classes.closeIcon}
           />
           <form onSubmit={addPost}>
             <TextField
-            className={classes.textFieldTitle}
+              className={classes.textFieldTitle}
               rows={1}
               name="title"
               multiline
               placeholder="Title!"
               onChange={handleChange}
-              
             />
             <TextField
               rows={12}
@@ -89,10 +96,13 @@ export const ModalToCreatePost = ({ userData, setStateOfModal }) => {
               placeholder="Share your experience with us!"
               onChange={handleChange}
               className={classes.textFieldText}
-
             />
-            <Button className={classes.createPostBtn} type="submit" variant="contained">
-              Submit 
+            <Button
+              className={classes.createPostBtn}
+              type="submit"
+              variant="contained"
+            >
+              Submit
             </Button>
           </form>
         </Paper>

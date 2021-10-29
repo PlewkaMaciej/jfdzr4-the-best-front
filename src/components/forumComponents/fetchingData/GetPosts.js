@@ -18,7 +18,7 @@ export const getPosts = (setPosts, uid) => {
     querySnapshot.forEach((postdoc) => {
       snap = getDoc(doc(db, "users", postdoc.data().uidOfUser));
       snap.then((doc) => {
-        if (doc.data().avatar === "default-avatar.png") {
+        if (doc.data().isAvatarDefault) {
           setPosts((prev) => [
             ...prev,
             {

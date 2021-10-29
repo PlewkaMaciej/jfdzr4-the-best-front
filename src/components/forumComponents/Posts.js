@@ -14,7 +14,6 @@ export const Posts = () => {
   useContext(UserContext)
   useEffect(() => {
     getPosts(setPosts, uid);
-    console.log(posts)
   }, []);
   const changeStatusOfModal = () => {
     stateOfModal ? setStateOfModal(false) : setStateOfModal(true);

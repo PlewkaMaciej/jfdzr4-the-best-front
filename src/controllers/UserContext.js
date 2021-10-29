@@ -18,13 +18,17 @@ export const UserContextProvider = ({ children }) => {
         setUid(user.uid);
         setEmail(user.email);
         const docRef = doc(db, "users", user.uid);
-        getDoc(docRef).then((docSnapshot) => {
-          setUsername(docSnapshot.data().username);
-        });
-        const storageRef = ref(storage, `avatars/${user.uid}`);
-        getDownloadURL(storageRef)
-          .then((url) => {
-            setAvatarUrl(url);
+        getDoc(docRef)
+          .then((docSnapshot) => {
+            setUsername(docSnapshot.data().username);
+            if (docSnapshot.data().isAvatarDefault) {
+              setAvatarUrl(null);
+            } else {
+              const storageRef = ref(storage, `avatars/${user.uid}`);
+              getDownloadURL(storageRef).then((url) => {
+                setAvatarUrl(url);
+              });
+            }
           })
           .catch((err) => {});
       } else {

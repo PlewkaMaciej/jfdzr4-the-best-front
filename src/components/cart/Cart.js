@@ -1,24 +1,29 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import CartCategories from "./CartCategories";
 import CartSummary from "./CartSummary";
 import { Wrapper } from "./Cart.styled";
+import { useCartDispatch, useCartState } from "../../controllers/CartContext";
+import { CartStepper } from "./CartStepper";
+import EmptyCartList from "./EmptyCartList";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import CartItem from "./CartItem";
 import Fab from "@mui/material/Fab";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EmptyCartList from "./EmptyCartList";
-import { useCartDispatch, useCartState } from "../../controllers/CartContext";
 
 const Cart = () => {
   const { cartItems } = useCartState();
   const { clearCart } = useCartDispatch();
+  const [activeStep, setActiveStep] = useState(0);
 
   return (
     <Wrapper
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      <CartStepper activeStep={activeStep} />
+
       {cartItems.length > 0 ? (
         <>
           <CartCategories />
@@ -75,7 +80,7 @@ const Cart = () => {
               justifyContent: "flex-end",
             }}
           >
-            <CartSummary />
+            <CartSummary setActiveStep={setActiveStep} />
           </Box>
         </>
       ) : (

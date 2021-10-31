@@ -6,9 +6,11 @@ import SendIcon from "@mui/icons-material/Send";
 import { Wrapper, ItemRight, ItemLeft } from "./CartSummary.styled";
 import { useCartState } from "../../controllers/CartContext";
 
-const CartSummary = () => {
-
+const CartSummary = ({ setActiveStep }) => {
   const { totalAmount, shippingFee } = useCartState();
+  const handleProceedToCheckout = () => {
+    setActiveStep(1);
+  }
   return (
     <Wrapper>
       <Grid container rowSpacing={2}>
@@ -45,7 +47,6 @@ const CartSummary = () => {
             justifyContent: "center",
           }}
         >
-          <Link to="/checkout" style={{ textDecoration: "none" }}>
             <Fab
               variant="extended"
               color="primary"
@@ -55,6 +56,7 @@ const CartSummary = () => {
                 fontSize: ".8rem",
                 mt: 2,
               }}
+              onClick={handleProceedToCheckout}
             >
               proceed to checkout
               <SendIcon
@@ -64,7 +66,6 @@ const CartSummary = () => {
                 }}
               />
             </Fab>
-          </Link>
         </Grid>
       </Grid>
     </Wrapper>

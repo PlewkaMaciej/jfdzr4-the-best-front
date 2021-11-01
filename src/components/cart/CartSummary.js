@@ -58,7 +58,7 @@ const CartSummary = ({ setActiveStep }) => {
               }}
               onClick={handleProceedToCheckout}
             >
-              proceed to checkout
+              proceed to address
               <SendIcon
                 sx={{
                   ml: 1,

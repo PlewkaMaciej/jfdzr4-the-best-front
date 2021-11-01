@@ -12,6 +12,7 @@ import CartItem from "./CartItem";
 import Fab from "@mui/material/Fab";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import CartAddressForm from "../forms/CartAddressForm";
 
 const Cart = () => {
   const { cartItems } = useCartState();
@@ -23,8 +24,7 @@ const Cart = () => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <CartStepper activeStep={activeStep} />
-
-      {cartItems.length > 0 ? (
+      {activeStep === 0 && cartItems.length > 0 && (
         <>
           <CartCategories />
           <Divider />
@@ -83,9 +83,9 @@ const Cart = () => {
             <CartSummary setActiveStep={setActiveStep} />
           </Box>
         </>
-      ) : (
-        <EmptyCartList />
       )}
+      {cartItems.length <= 0 && <EmptyCartList />}
+      {activeStep === 1 && <CartAddressForm />}
     </Wrapper>
   );
 };

@@ -3,7 +3,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 
-const steps = ["Cart", "Summary", "Payment"];
+const steps = ["Cart", "Address", "Checkout"];
 
 export const CartStepper = ({ activeStep }) => {
   return (

@@ -75,8 +75,7 @@ const BookCard = ({ title, author, price, id, coverName, description, copies }) 
         )}
         <CardContent
           sx={{
-            minHeight: "175px",
-            marginTop: "20px",
+            minHeight: "130px",
           }}
         >
           <Typography
@@ -103,11 +102,11 @@ const BookCard = ({ title, author, price, id, coverName, description, copies }) 
           >
             {description}
           </Typography>
-          <Typography variant="h6" component="div" sx={{ mt: 2 }}>
-            {`cena: ${price.toFixed(2)} zł`}
-          </Typography>
         </CardContent>
       </Link>
+      <Typography variant="h6" component="div" sx={{ m: "20px" }}>
+            {`price: ${price.toFixed(2)} zł`}
+      </Typography>
       <CardActions className={classes.cardActions}>
         <Fab
           variant="extended"

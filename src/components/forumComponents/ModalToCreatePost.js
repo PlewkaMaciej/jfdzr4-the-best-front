@@ -9,7 +9,7 @@ import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
 
-export const ModalToCreatePost = ({ setStateOfModal }) => {
+export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
   const { uid, email, username, avatarUrl, setAvatarUrl } =
     useContext(UserContext);
   const useStyles = makeStyles({
@@ -62,6 +62,7 @@ export const ModalToCreatePost = ({ setStateOfModal }) => {
   };
   const changeStatusOfModal = () => {
     setStateOfModal(false);
+    setStateOfEditPostModal(false);
   };
   return (
     <>

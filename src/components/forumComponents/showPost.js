@@ -73,6 +73,8 @@ export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title,
     },
     editButton: {
       marginLeft: "150px",
+      position:"relative",
+      zIndex: 1,
     },
     heartForLikes: {
       marginTop: "175px",

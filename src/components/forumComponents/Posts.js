@@ -7,7 +7,15 @@ import "firebase/compat/firestore";
 import { ShowPosts } from "./showPost";
 import { getPosts } from "./fetchingData/GetPosts";
 import { UserContext } from "../../controllers/UserContext";
+import { makeStyles } from "@mui/styles";
 export const Posts = () => {
+  const useStyles = makeStyles({
+    createNewPostButton:{
+      position:"fixed",
+      zIndex: 6,
+    }
+  })
+  const classes = useStyles();
   const [stateOfModal, setStateOfModal] = useState(false);
   const [posts, setPosts] = useState([]);
   const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
@@ -25,7 +33,7 @@ export const Posts = () => {
         <>
           <section className="section-create-post">
             {username&&(
-              <Button onClick={changeStatusOfModal} variant="contained">
+              <Button  className={classes.createNewPostButton} onClick={changeStatusOfModal} variant="contained">
               Create new post
             </Button>
             )}
@@ -44,6 +52,7 @@ export const Posts = () => {
         <>
           <ModalToCreatePost
             setStateOfModal={setStateOfModal}
+            setStateOfEditPostModal={setStateOfEditPostModal}
           />
         </>
       )}

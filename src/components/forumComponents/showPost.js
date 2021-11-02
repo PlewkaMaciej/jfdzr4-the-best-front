@@ -10,14 +10,19 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../index";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { ModalToEditPost } from "./ModalToEditPost";
 export const ShowPosts = ({ title, text, id, uidOfUser, postCreator, url }) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
+  const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
   const getLike = () => {
     if (stateOfLikes === false) {
       setStateOfLikes(true);
     } else {
       setStateOfLikes(false);
     }
+  };
+  const editPost = () => {
+    setStateOfEditPostModal(true);
   };
   const deletePost = () => {
     deleteDoc(doc(db, "posts", id));
@@ -67,6 +72,9 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator, url }) => {
       justifyContent: "space-between",
       width: "600px",
     },
+    editButton: {
+      marginLeft: "150px",
+    },
     heartForLikes: {
       marginTop: "175px",
       marginLeft: "30px",
@@ -79,70 +87,94 @@ export const ShowPosts = ({ title, text, id, uidOfUser, postCreator, url }) => {
 
   return (
     <>
-      <section className="section-showingposts">
-        <Paper className={classes.paper} elevation={12}>
-          <CardContent className={classes.avatarAndNicknameContainer}>
-            <Avatar
-              className={classes.avatar}
-              alt="avatar"
-              src={url}
-              sx={{ boxShadow: "2px 2px 10px rgba(0, 0, 0, .75)" }}
-            />
-            <CardContent className={classes.nicknameAndButton}>
-              <Typography
-                className={classes.typographyNickname}
-                variant="h5"
-                component="h5"
-              >
-                {postCreator}
-              </Typography>
-              {uid === uidOfUser && (
-                <Button
-                  onClick={deletePost}
-                  id={id}
-                  className={classes.deleteButton}
-                  type="submit"
-                  variant="contained"
-                  color="primary"
+      {!stateOfEditPostModal && (
+        <section className="section-showingposts">
+          <Paper className={classes.paper} elevation={12}>
+            <CardContent className={classes.avatarAndNicknameContainer}>
+              <Avatar
+                className={classes.avatar}
+                alt="avatar"
+                src={url}
+                sx={{ boxShadow: "2px 2px 10px rgba(0, 0, 0, .75)" }}
+              />
+              <CardContent className={classes.nicknameAndButton}>
+                <Typography
+                  className={classes.typographyNickname}
+                  variant="h5"
+                  component="h5"
                 >
-                  Delete Post
-                </Button>
-              )}
+                  {postCreator}
+                </Typography>
+                {uid === uidOfUser && (
+                  <Button
+                    id={id}
+                    onClick={editPost}
+                    className={classes.editButton}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Edit POST
+                  </Button>
+                )}
+                {uid === uidOfUser && (
+                  <Button
+                    onClick={deletePost}
+                    id={id}
+                    className={classes.deleteButton}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    Delete Post
+                  </Button>
+                )}
+              </CardContent>
             </CardContent>
-          </CardContent>
-          <Typography className={classes.hours} variant="p" component="p">
-            hours ago
-          </Typography>
-          <CardContent className={classes.tittleInMiddle}>
-            <Typography
-              className={classes.typographyTitleAboutBook}
-              variant="h3"
-              component="h3"
-            >
-              {title}
+            <Typography className={classes.hours} variant="p" component="p">
+              hours ago
             </Typography>
-          </CardContent>
-          <Typography
-            className={classes.typographyTextAboutBook}
-            variant="p"
-            component="p"
-          >
-            {text}
-          </Typography>
-          {stateOfLikes === false && (
-            <FavoriteBorderIcon
-              onClick={getLike}
-              className={classes.heartForLikes}
-            ></FavoriteBorderIcon>
-          )}
-          {stateOfLikes === true && (
-            <FavoriteIcon
-              onClick={getLike}
-              className={classes.heartForLikes}
-            ></FavoriteIcon>
-          )}
-        </Paper>
-      </section>
+            <CardContent className={classes.tittleInMiddle}>
+              <Typography
+                className={classes.typographyTitleAboutBook}
+                variant="h3"
+                component="h3"
+              >
+                {title}
+              </Typography>
+            </CardContent>
+            <Typography
+              className={classes.typographyTextAboutBook}
+              variant="p"
+              component="p"
+            >
+              {text}
+            </Typography>
+            {stateOfLikes === false && (
+              <FavoriteBorderIcon
+                onClick={getLike}
+                className={classes.heartForLikes}
+              ></FavoriteBorderIcon>
+            )}
+            {stateOfLikes === true && (
+              <FavoriteIcon
+                onClick={getLike}
+                className={classes.heartForLikes}
+              ></FavoriteIcon>
+            )}
+          </Paper>
+        </section>
+      )}
+      {stateOfEditPostModal && (
+        <ModalToEditPost
+          setStateOfEditPostModal={setStateOfEditPostModal}
+          text={text}
+          title={title}
+          id={id}
+          uidOfUser={uidOfUser}
+          postCreator={postCreator}
+        />
+      )}
     </>
   );
 };

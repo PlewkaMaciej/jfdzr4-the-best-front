@@ -7,9 +7,18 @@ import "firebase/compat/firestore";
 import { ShowPosts } from "./showPost";
 import { getPosts } from "./fetchingData/GetPosts";
 import { UserContext } from "../../controllers/UserContext";
+import { makeStyles } from "@mui/styles";
 export const Posts = () => {
+  const useStyles = makeStyles({
+    createNewPostButton:{
+      position:"fixed",
+      zIndex: 6,
+    }
+  })
+  const classes = useStyles();
   const [stateOfModal, setStateOfModal] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
   const { uid, email, username, avatarUrl, setAvatarUrl } =
   useContext(UserContext)
   useEffect(() => {
@@ -24,7 +33,7 @@ export const Posts = () => {
         <>
           <section className="section-create-post">
             {username&&(
-              <Button onClick={changeStatusOfModal} variant="contained">
+              <Button  className={classes.createNewPostButton} onClick={changeStatusOfModal} variant="contained">
               Create new post
             </Button>
             )}
@@ -33,16 +42,17 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
+              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>
       )}
 
-      {stateOfModal && (
+      {stateOfModal &&(
         <>
           <ModalToCreatePost
             setStateOfModal={setStateOfModal}
+            setStateOfEditPostModal={setStateOfEditPostModal}
           />
         </>
       )}

@@ -18,6 +18,17 @@ const Cart = () => {
   const { cartItems } = useCartState();
   const { clearCart } = useCartDispatch();
   const [activeStep, setActiveStep] = useState(0);
+  const [address, setAddress] = useState({
+    fname: "",
+    surname: "",
+    street: "",
+    city: "",
+    postcode: "",
+    phoneNumber: "",
+  });
+  const handleClearCart = () => {
+    clearCart();
+  };
 
   return (
     <Wrapper
@@ -58,7 +69,7 @@ const Cart = () => {
               </Fab>
             </Link>
             <Fab
-              onClick={() => clearCart()}
+              onClick={handleClearCart}
               variant="extended"
               aria-label="clear cart"
               sx={{
@@ -85,7 +96,14 @@ const Cart = () => {
         </>
       )}
       {cartItems.length <= 0 && <EmptyCartList />}
-      {activeStep === 1 && <CartAddressForm />}
+      {activeStep === 1 && (
+        <CartAddressForm
+          setActiveStep={setActiveStep}
+          address={address}
+          setAddress={setAddress}
+        />
+      )}
+      {activeStep === 2 && <h2>płać maleńki :)</h2>}
     </Wrapper>
   );
 };

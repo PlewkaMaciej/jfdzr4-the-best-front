@@ -11,9 +11,8 @@ import { db } from "../../index";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ModalToEditPost } from "./ModalToEditPost";
-export const ShowPosts = ({ title, text, id, uidOfUser, postCreator, url }) => {
+export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title, text, id, uidOfUser, postCreator, url }) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
-  const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
   const getLike = () => {
     if (stateOfLikes === false) {
       setStateOfLikes(true);

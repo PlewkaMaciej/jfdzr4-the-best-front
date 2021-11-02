@@ -10,6 +10,7 @@ import { UserContext } from "../../controllers/UserContext";
 export const Posts = () => {
   const [stateOfModal, setStateOfModal] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
   const { uid, email, username, avatarUrl, setAvatarUrl } =
   useContext(UserContext)
   useEffect(() => {
@@ -33,13 +34,13 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts  setStateOfModal={setStateOfModal} key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
+              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>
       )}
 
-      {stateOfModal && (
+      {stateOfModal &&(
         <>
           <ModalToCreatePost
             setStateOfModal={setStateOfModal}

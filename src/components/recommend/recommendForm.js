@@ -6,7 +6,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 
 
-export default function Hello() {
+export default function RecommendedCheckbox() {
   return (
     <FormGroup sx={{ width: '10%', textAlign: 'center' }}>
     <FormControlLabel control={<Checkbox default />} label="Fantastic" />

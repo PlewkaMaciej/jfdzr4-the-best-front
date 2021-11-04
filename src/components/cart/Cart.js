@@ -13,6 +13,7 @@ import Fab from "@mui/material/Fab";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CartAddressForm from "../forms/CartAddressForm";
+import CartCheckout from "./CartCheckout";
 
 const Cart = () => {
   const { cartItems } = useCartState();
@@ -103,7 +104,7 @@ const Cart = () => {
           setAddress={setAddress}
         />
       )}
-      {activeStep === 2 && <h2>płać maleńki :)</h2>}
+      {activeStep === 2 && <CartCheckout {...address} setActiveStep={setActiveStep} />}
     </Wrapper>
   );
 };

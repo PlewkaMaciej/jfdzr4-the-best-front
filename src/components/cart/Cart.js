@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import CartCategories from "./CartCategories";
 import CartSummary from "./CartSummary";
 import { Wrapper } from "./Cart.styled";
@@ -14,6 +14,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CartAddressForm from "../forms/CartAddressForm";
 import CartCheckout from "./CartCheckout";
+import CartSetOrder from "./CartSetOrder";
 
 const Cart = () => {
   const { cartItems } = useCartState();
@@ -27,9 +28,27 @@ const Cart = () => {
     postcode: "",
     phoneNumber: "",
   });
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
   const handleClearCart = () => {
     clearCart();
   };
+
+  useEffect(() => {
+    if (activeStep === 3) {
+      const timeout = setTimeout(() => {
+        setShouldRedirect(true);
+        clearCart();
+        return clearTimeout(timeout);
+      }, 3000);
+    } else {
+      setShouldRedirect(false);
+    }
+  }, [activeStep, clearCart]);
+
+  if (shouldRedirect) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Wrapper
@@ -104,7 +123,10 @@ const Cart = () => {
           setAddress={setAddress}
         />
       )}
-      {activeStep === 2 && <CartCheckout {...address} setActiveStep={setActiveStep} />}
+      {activeStep === 2 && (
+        <CartCheckout {...address} setActiveStep={setActiveStep} />
+      )}
+      {activeStep === 3 && <CartSetOrder />}
     </Wrapper>
   );
 };

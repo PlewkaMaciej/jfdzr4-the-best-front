@@ -24,6 +24,7 @@ export const Posts = () => {
   useEffect(() => {
     getPosts(setPosts, uid);
   }, []);
+  
   const changeStatusOfModal = () => {
     stateOfModal ? setStateOfModal(false) : setStateOfModal(true);
   };
@@ -42,7 +43,7 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title} text={post.text} id={post.id} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
+              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} likes={post.likes} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>

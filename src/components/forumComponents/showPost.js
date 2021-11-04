@@ -3,21 +3,62 @@ import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { UserContext } from "../../controllers/UserContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, setDoc } from "firebase/firestore";
 import { db } from "../../index";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ModalToEditPost } from "./ModalToEditPost";
-export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title, text, id, uidOfUser, postCreator, url }) => {
+export const ShowPosts = ({
+  setStateOfEditPostModal,
+  likes,
+  idUser,
+  stateOfEditPostModal,
+  title,
+  text,
+  id,
+  uidOfUser,
+  postCreator,
+  url,
+}) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
-  const getLike = () => {
-    if (stateOfLikes === false) {
+  const [numberOfLikes, setNumberOfLikes] = useState(null);
+  useEffect(() => {
+    setNumberOfLikes(likes.length)
+    if (likes.includes(idUser)) {
       setStateOfLikes(true);
+    }
+  }, []);
+
+  const getLike = (e) => {
+    e.preventDefault();
+
+    if (!likes.includes(idUser)) {
+      likes.push(idUser);
+
+      setStateOfLikes(true);
+
+      setDoc(doc(db, "posts", id), {
+        title,
+        text,
+        postCreator,
+        uidOfUser,
+        likes,
+      });
     } else {
       setStateOfLikes(false);
+      likes = likes.filter(function (element) {
+        return element!==idUser
+      });
+      setDoc(doc(db, "posts", id), {
+        title,
+        text,
+        postCreator,
+        uidOfUser,
+        likes,
+      });
     }
   };
   const editPost = () => {
@@ -73,16 +114,23 @@ export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title,
     },
     editButton: {
       marginLeft: "150px",
-      position:"relative",
+      position: "relative",
       zIndex: 1,
     },
     heartForLikes: {
-      marginTop: "175px",
-      marginLeft: "30px",
+      
       width: "40px",
       height: "40px",
       color: "#1976d2",
     },
+    numberOfLikes:{
+      color: "#1976d2"
+    },
+    heartAndNumbers:{
+display:"flex",
+alignItems:"center",
+marginTop:"150px"
+    }
   });
   const classes = useStyles();
 
@@ -151,6 +199,7 @@ export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title,
             >
               {text}
             </Typography>
+            <CardContent className={classes.heartAndNumbers}>
             {stateOfLikes === false && (
               <FavoriteBorderIcon
                 onClick={getLike}
@@ -163,6 +212,14 @@ export const ShowPosts = ({setStateOfEditPostModal, stateOfEditPostModal, title,
                 className={classes.heartForLikes}
               ></FavoriteIcon>
             )}
+            <Typography
+              className={classes.numberOfLikes}
+              variant="p"
+              component="p"
+            >
+              {numberOfLikes}
+            </Typography>
+            </CardContent>
           </Paper>
         </section>
       )}

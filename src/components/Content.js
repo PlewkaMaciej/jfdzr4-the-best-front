@@ -7,6 +7,7 @@ import SignUpForm from "./forms/SignUpForm";
 import { Posts } from "./forumComponents/Posts";
 import Cart from "./cart/Cart";
 import About from "./about/AboutUs";
+import Recommend from "./recommend/recommendAll";
 
 const Content = () => (
   <Switch>
@@ -34,6 +35,10 @@ const Content = () => (
     <Route path="/forum">
       <Posts />
     </Route>
+    <Route path="/recommend">
+      <Recommend />
+    </Route>
+    
   </Switch>
 );
 

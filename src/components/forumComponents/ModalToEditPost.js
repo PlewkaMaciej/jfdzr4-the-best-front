@@ -4,12 +4,13 @@ import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { useState, useEffect, useContext } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from "../../index";
 
-export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
+export const ModalToEditPost = ({setStateOfEditPostModal, text, title, id, postCreator, uidOfUser}) => {
+  const [stateOfEditText, setStateOfEditText] = useState(false);
   const { uid, email, username, avatarUrl, setAvatarUrl } =
     useContext(UserContext);
   const useStyles = makeStyles({
@@ -40,18 +41,19 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
     },
   });
   const [formData, setFormData] = useState({
-    title: "",
-    text: "",
+    title: title,
+    text: text,
   });
   const classes = useStyles();
-  const addPost = (e) => {
+  const editPost = (e) => {
     e.preventDefault();
-    setStateOfModal(false);
-    addDoc(collection(db, "posts"), {
-      title: formData.title,
-      text: formData.text,
-      uidOfUser: uid,
-      postCreator: username,
+    setStateOfEditPostModal(false);
+    
+    setDoc(doc(db, "posts", id), {
+      title:formData.title,
+      text:formData.text,
+      postCreator,
+      uidOfUser,
     });
   };
   const handleChange = (e) => {
@@ -61,8 +63,7 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
     });
   };
   const changeStatusOfModal = () => {
-    setStateOfModal(false);
-    setStateOfEditPostModal(false);
+    setStateOfEditPostModal(false)
   };
   return (
     <>
@@ -73,20 +74,20 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
             variant="h3"
             component="h3"
           >
-            Hello {username}!
+            Edit your post!
           </Typography>
 
           <CloseIcon
             onClick={changeStatusOfModal}
             className={classes.closeIcon}
           />
-          <form onSubmit={addPost}>
+          <form onSubmit={editPost}>
             <TextField
               className={classes.textFieldTitle}
               rows={1}
               name="title"
               multiline
-              placeholder="Title!"
+              defaultValue={title}
               onChange={handleChange}
             />
             <TextField
@@ -94,7 +95,7 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
               multiline
               aria-label="maximum height"
               name="text"
-              placeholder="Share your experience with us!"
+              defaultValue={text}
               onChange={handleChange}
               className={classes.textFieldText}
             />

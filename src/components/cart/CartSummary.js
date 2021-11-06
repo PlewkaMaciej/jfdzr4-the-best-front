@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
@@ -6,9 +5,11 @@ import SendIcon from "@mui/icons-material/Send";
 import { Wrapper, ItemRight, ItemLeft } from "./CartSummary.styled";
 import { useCartState } from "../../controllers/CartContext";
 
-const CartSummary = () => {
-
+const CartSummary = ({ setActiveStep }) => {
   const { totalAmount, shippingFee } = useCartState();
+  const handleProceed = () => {
+    setActiveStep(1);
+  };
   return (
     <Wrapper>
       <Grid container rowSpacing={2}>
@@ -45,26 +46,25 @@ const CartSummary = () => {
             justifyContent: "center",
           }}
         >
-          <Link to="/checkout" style={{ textDecoration: "none" }}>
-            <Fab
-              variant="extended"
-              color="primary"
-              type="submit"
-              aria-label="proceed to checkout"
+          <Fab
+            variant="extended"
+            color="primary"
+            type="submit"
+            aria-label="proceed to checkout"
+            sx={{
+              fontSize: ".8rem",
+              mt: 2,
+            }}
+            onClick={handleProceed}
+          >
+            proceed to address
+            <SendIcon
               sx={{
-                fontSize: ".8rem",
-                mt: 2,
+                ml: 1,
+                fontSize: "1rem",
               }}
-            >
-              proceed to checkout
-              <SendIcon
-                sx={{
-                  ml: 1,
-                  fontSize: "1rem",
-                }}
-              />
-            </Fab>
-          </Link>
+            />
+          </Fab>
         </Grid>
       </Grid>
     </Wrapper>

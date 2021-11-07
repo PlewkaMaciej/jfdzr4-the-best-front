@@ -231,6 +231,7 @@ marginTop:"150px"
           id={id}
           uidOfUser={uidOfUser}
           postCreator={postCreator}
+          likes={likes}
         />
       )}
     </>

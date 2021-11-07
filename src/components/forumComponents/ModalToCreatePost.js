@@ -52,6 +52,7 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
       text: formData.text,
       uidOfUser: uid,
       postCreator: username,
+      likes:[],
     });
   };
   const handleChange = (e) => {

@@ -9,7 +9,7 @@ import { UserContext } from "../../controllers/UserContext";
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from "../../index";
 
-export const ModalToEditPost = ({setStateOfEditPostModal, text, title, id, postCreator, uidOfUser}) => {
+export const ModalToEditPost = ({setStateOfEditPostModal, text,likes, title, id, postCreator, uidOfUser}) => {
   const [stateOfEditText, setStateOfEditText] = useState(false);
   const { uid, email, username, avatarUrl, setAvatarUrl } =
     useContext(UserContext);
@@ -54,6 +54,7 @@ export const ModalToEditPost = ({setStateOfEditPostModal, text, title, id, postC
       text:formData.text,
       postCreator,
       uidOfUser,
+      likes,
     });
   };
   const handleChange = (e) => {

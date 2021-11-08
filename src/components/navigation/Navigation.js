@@ -47,7 +47,7 @@ const Navigation = () => {
               </Typography>
             </Link>
           </LogoWrapper>
-          <SearchField />
+          <SearchField pathname={pathname}/>
         </ContentWrapper>
         <ButtonsWrapper>
           <Link

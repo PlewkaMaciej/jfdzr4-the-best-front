@@ -6,7 +6,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useFilterContext } from "../../controllers/FilterContext";
 
-const SearchField = () => {
+const SearchField = ({ pathname }) => {
   const { filterProducts } = useFilterContext();
   const handleChange = (e) => {
     filterProducts(e.target.value);
@@ -18,9 +18,10 @@ const SearchField = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         placeholder="Search title, author ..."
         inputProps={{ "aria-label": "search title or author" }}
+        disabled={pathname === "/" ? false : true}
       />
     </Search>
   );

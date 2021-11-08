@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../logo.png";
+import logo from "../../assets/logo.png";
 import { DropdownMenu } from "./DropdownMenu";
 import {
   LogoWrapper,

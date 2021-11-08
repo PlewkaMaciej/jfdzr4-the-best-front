@@ -50,7 +50,7 @@ function AboutUsAccordions() {
   };
 
   return (
-    <div>
+    <>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
@@ -60,11 +60,9 @@ function AboutUsAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <div>
-              <b>SMART BOOKS</b> is a design-minded, multi-disciplinary brand
-              offering experiences and events related to books and reading.
-              Founded and run by <b>The-Best-Front Team</b> in 2021 from Poland.
-            </div>
+            <b>SMART BOOKS</b> is a design-minded, multi-disciplinary brand
+            offering experiences and events related to books and reading.
+            Founded and run by <b>The-Best-Front Team</b> in 2021 from Poland.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -76,23 +74,20 @@ function AboutUsAccordions() {
           <Typography>OUR PHILOSOPHY</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            <div>
-              Some people like to read on a screen. Other people need the
-              variety and artistry, the sight, smell, and feel of actual
-              books.They love seeing them on their shelves; they love having
-              shelves for them.
-            </div>
-            <div>
-              They love taking them along when they leave the house, and
-              stacking them by their bedsides. They love finding old letters and
-              bookmarks in them. They like remembering where they bought them or
-              who they received them from.
-            </div>
-            <div>
-              They can't pass a bookstore without going in and getting
-              something, they keep a library card and use it.
-            </div>
+          <Typography gutterBottom>
+            Some people like to read on a screen. Other people need the variety
+            and artistry, the sight, smell, and feel of actual books.They love
+            seeing them on their shelves; they love having shelves for them.
+          </Typography>
+          <Typography gutterBottom>
+            They love taking them along when they leave the house, and stacking
+            them by their bedsides. They love finding old letters and bookmarks
+            in them. They like remembering where they bought them or who they
+            received them from.
+          </Typography>
+          <Typography gutterBottom>
+            They can't pass a bookstore without going in and getting something,
+            they keep a library card and use it.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -104,14 +99,14 @@ function AboutUsAccordions() {
           <Typography>CONTACT</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            <div>Email: info@smartbookshop.com</div>
-            <div>Address: Solec 34, 00-404 Warsaw, Poland</div>
-            <div>Phone: +48 567 128 789</div>
+          <Typography gutterBottom>Email: info@smartbookshop.com</Typography>
+          <Typography gutterBottom>
+            Address: Solec 34, 00-404 Warsaw, Poland
           </Typography>
+          <Typography gutterBottom>Phone: +48 567 128 789</Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </>
   );
 }
 

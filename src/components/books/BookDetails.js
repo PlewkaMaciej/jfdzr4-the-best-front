@@ -62,7 +62,7 @@ const BookDetails = () => {
           }}
         >
           <Grid container spacing={2}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Fab
                 onClick={handleBack}
                 variant="extended"
@@ -78,7 +78,7 @@ const BookDetails = () => {
                 back
               </Fab>
             </Grid>
-            <Grid xs={4}>
+            <Grid item xs={4}>
               {imgUrl !== "" ? (
                 <CardMedia
                   component="img"
@@ -108,7 +108,7 @@ const BookDetails = () => {
                 </Box>
               )}
             </Grid>
-            <Grid xs={8}>
+            <Grid item xs={8}>
               <Box
                 sx={{
                   padding: "0 2rem 0 2.5rem",

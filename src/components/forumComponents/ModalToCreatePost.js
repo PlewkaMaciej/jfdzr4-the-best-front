@@ -3,14 +3,14 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { useState, useEffect, useContext } from "react";
+import { useState,useContext } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
 
 export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
-  const { uid, email, username, avatarUrl, setAvatarUrl } =
+  const { uid, username } =
     useContext(UserContext);
   const useStyles = makeStyles({
     paper: {

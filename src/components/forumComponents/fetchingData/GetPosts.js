@@ -5,7 +5,6 @@ import {
   onSnapshot,
   doc,
   getDoc,
-  getDocs,
 } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 export const getPosts = (setPosts, uid) => {

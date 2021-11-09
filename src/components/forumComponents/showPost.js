@@ -26,7 +26,8 @@ export const ShowPosts = ({
   const [stateOfLikes, setStateOfLikes] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(null);
   useEffect(() => {
-    setNumberOfLikes(likes.length)
+    
+    setNumberOfLikes(likes.length);
     if (likes.includes(idUser)) {
       setStateOfLikes(true);
     }
@@ -50,7 +51,7 @@ export const ShowPosts = ({
     } else {
       setStateOfLikes(false);
       likes = likes.filter(function (element) {
-        return element!==idUser
+        return element !== idUser;
       });
       setDoc(doc(db, "posts", id), {
         title,
@@ -62,13 +63,13 @@ export const ShowPosts = ({
     }
   };
   const editPost = () => {
-    setStateOfEditPostModal(true);
+    setStateOfEditPostModal(id)
+    
   };
   const deletePost = () => {
     deleteDoc(doc(db, "posts", id));
   };
-  const { uid, email, username, avatarUrl, setAvatarUrl } =
-    useContext(UserContext);
+  const { uid } = useContext(UserContext);
   const useStyles = makeStyles({
     paper: {
       minHeight: "500px",
@@ -118,19 +119,18 @@ export const ShowPosts = ({
       zIndex: 1,
     },
     heartForLikes: {
-      
       width: "40px",
       height: "40px",
-      color: "#1976d2",
+      color: "red",
     },
-    numberOfLikes:{
-      color: "#1976d2"
+    numberOfLikes: {
+      color: "red",
     },
-    heartAndNumbers:{
-display:"flex",
-alignItems:"center",
-marginTop:"150px"
-    }
+    heartAndNumbers: {
+      display: "flex",
+      alignItems: "center",
+      marginTop: "150px",
+    },
   });
   const classes = useStyles();
 
@@ -200,30 +200,30 @@ marginTop:"150px"
               {text}
             </Typography>
             <CardContent className={classes.heartAndNumbers}>
-            {stateOfLikes === false && (
-              <FavoriteBorderIcon
-                onClick={getLike}
-                className={classes.heartForLikes}
-              ></FavoriteBorderIcon>
-            )}
-            {stateOfLikes === true && (
-              <FavoriteIcon
-                onClick={getLike}
-                className={classes.heartForLikes}
-              ></FavoriteIcon>
-            )}
-            <Typography
-              className={classes.numberOfLikes}
-              variant="p"
-              component="p"
-            >
-              {numberOfLikes}
-            </Typography>
+              {stateOfLikes === false && (
+                <FavoriteBorderIcon
+                  onClick={getLike}
+                  className={classes.heartForLikes}
+                ></FavoriteBorderIcon>
+              )}
+              {stateOfLikes === true && (
+                <FavoriteIcon
+                  onClick={getLike}
+                  className={classes.heartForLikes}
+                ></FavoriteIcon>
+              )}
+              <Typography
+                className={classes.numberOfLikes}
+                variant="p"
+                component="p"
+              >
+                {numberOfLikes}
+              </Typography>
             </CardContent>
           </Paper>
         </section>
       )}
-      {stateOfEditPostModal && (
+      {stateOfEditPostModal===id && (
         <ModalToEditPost
           setStateOfEditPostModal={setStateOfEditPostModal}
           text={text}

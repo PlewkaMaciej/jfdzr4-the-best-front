@@ -13,13 +13,17 @@ export const Posts = () => {
     createNewPostButton:{
       position:"fixed",
       zIndex: 6,
+      left:"100px",
+      width:"250px",
+      height:"70px",
+      marginTop:"30px"
     }
   })
   const classes = useStyles();
   const [stateOfModal, setStateOfModal] = useState(false);
   const [posts, setPosts] = useState([]);
   const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
-  const { uid, email, username, avatarUrl, setAvatarUrl } =
+  const { uid,username,  } =
   useContext(UserContext)
   useEffect(() => {
     getPosts(setPosts, uid);

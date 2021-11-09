@@ -3,14 +3,19 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { useState, useEffect, useContext } from "react";
+import { useState,useContext, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
+import { Time } from "./Date";
 
 export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
-  const { uid, email, username, avatarUrl, setAvatarUrl } =
+  const [timeOfPost, setTimeOfPost] = useState("");
+  useEffect(()=>{
+    setTimeOfPost(Time().toString())
+  })
+  const { uid, username } =
     useContext(UserContext);
   const useStyles = makeStyles({
     paper: {
@@ -53,6 +58,7 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
       uidOfUser: uid,
       postCreator: username,
       likes:[],
+      time:timeOfPost
     });
   };
   const handleChange = (e) => {

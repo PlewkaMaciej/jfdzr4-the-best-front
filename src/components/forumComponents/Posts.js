@@ -47,7 +47,7 @@ export const Posts = () => {
           {posts.map((post, index) => {
             return (
             
-              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} likes={post.likes} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
+              <ShowPosts  stateOfEditPostModal={stateOfEditPostModal} timeOfAddedPost={post.time} likes={post.likes} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>

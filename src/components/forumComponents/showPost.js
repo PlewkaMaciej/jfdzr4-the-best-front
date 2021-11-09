@@ -22,11 +22,11 @@ export const ShowPosts = ({
   uidOfUser,
   postCreator,
   url,
+  timeOfAddedPost,
 }) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(null);
   useEffect(() => {
-    
     setNumberOfLikes(likes.length);
     if (likes.includes(idUser)) {
       setStateOfLikes(true);
@@ -181,7 +181,7 @@ export const ShowPosts = ({
               </CardContent>
             </CardContent>
             <Typography className={classes.hours} variant="p" component="p">
-              hours ago
+              {timeOfAddedPost}
             </Typography>
             <CardContent className={classes.tittleInMiddle}>
               <Typography

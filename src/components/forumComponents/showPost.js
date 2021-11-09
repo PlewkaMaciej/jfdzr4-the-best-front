@@ -23,6 +23,7 @@ export const ShowPosts = ({
   postCreator,
   url,
   timeOfAddedPost,
+  time,
 }) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(null);
@@ -47,6 +48,7 @@ export const ShowPosts = ({
         postCreator,
         uidOfUser,
         likes,
+        time,
       });
     } else {
       setStateOfLikes(false);
@@ -59,6 +61,7 @@ export const ShowPosts = ({
         postCreator,
         uidOfUser,
         likes,
+        time,
       });
     }
   };
@@ -181,7 +184,7 @@ export const ShowPosts = ({
               </CardContent>
             </CardContent>
             <Typography className={classes.hours} variant="p" component="p">
-              {timeOfAddedPost}
+              {time}
             </Typography>
             <CardContent className={classes.tittleInMiddle}>
               <Typography
@@ -226,6 +229,7 @@ export const ShowPosts = ({
       {stateOfEditPostModal===id && (
         <ModalToEditPost
           setStateOfEditPostModal={setStateOfEditPostModal}
+          time={time}
           text={text}
           title={title}
           id={id}

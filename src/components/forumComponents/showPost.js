@@ -25,48 +25,9 @@ export const ShowPosts = ({
   oldOfPost,
   time,
 }) => {
-  const [stateOfLikes, setStateOfLikes] = useState(false);
-  const [numberOfLikes, setNumberOfLikes] = useState(null);
   useEffect(() => {
-    setNumberOfLikes(likes.length);
-    if (likes.includes(idUser)) {
-      setStateOfLikes(true);
-    }
+    
   }, []);
-
-  const getLike = (e) => {
-    e.preventDefault();
-
-    if (!likes.includes(idUser)) {
-      likes.push(idUser);
-
-      setStateOfLikes(true);
-
-      setDoc(doc(db, "posts", id), {
-        title,
-        text,
-        postCreator,
-        uidOfUser,
-        likes,
-        time,
-        oldOfPost,
-      });
-    } else {
-      setStateOfLikes(false);
-      likes = likes.filter(function (element) {
-        return element !== idUser;
-      });
-      setDoc(doc(db, "posts", id), {
-        title,
-        text,
-        postCreator,
-        uidOfUser,
-        likes,
-        time,
-        oldOfPost,
-      });
-    }
-  };
   const editPost = () => {
     setStateOfEditPostModal(id)
     
@@ -204,27 +165,7 @@ export const ShowPosts = ({
             >
               {text}
             </Typography>
-            <CardContent className={classes.heartAndNumbers}>
-              {stateOfLikes === false && (
-                <FavoriteBorderIcon
-                  onClick={getLike}
-                  className={classes.heartForLikes}
-                ></FavoriteBorderIcon>
-              )}
-              {stateOfLikes === true && (
-                <FavoriteIcon
-                  onClick={getLike}
-                  className={classes.heartForLikes}
-                ></FavoriteIcon>
-              )}
-              <Typography
-                className={classes.numberOfLikes}
-                variant="p"
-                component="p"
-              >
-                {numberOfLikes}
-              </Typography>
-            </CardContent>
+       
           </Paper>
         </section>
       )}

@@ -22,7 +22,7 @@ export const ShowPosts = ({
   uidOfUser,
   postCreator,
   url,
-  timeOfAddedPost,
+  oldOfPost,
   time,
 }) => {
   const [stateOfLikes, setStateOfLikes] = useState(false);
@@ -49,6 +49,7 @@ export const ShowPosts = ({
         uidOfUser,
         likes,
         time,
+        oldOfPost,
       });
     } else {
       setStateOfLikes(false);
@@ -62,6 +63,7 @@ export const ShowPosts = ({
         uidOfUser,
         likes,
         time,
+        oldOfPost,
       });
     }
   };
@@ -236,6 +238,7 @@ export const ShowPosts = ({
           uidOfUser={uidOfUser}
           postCreator={postCreator}
           likes={likes}
+          oldOfPost={oldOfPost}
         />
       )}
     </>

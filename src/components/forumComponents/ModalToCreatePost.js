@@ -9,12 +9,15 @@ import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
 import { Time } from "./Date";
+import { Seconds1970 } from "./SecondsFrom1970";
 
 export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
   const [timeOfPost, setTimeOfPost] = useState("");
+  const [howOldIsPost, setHowOldIsPost] = useState(null);
   useEffect(()=>{
     setTimeOfPost(Time().toString())
-  })
+    setHowOldIsPost(Seconds1970())
+  },[])
   const { uid, username } =
     useContext(UserContext);
   const useStyles = makeStyles({
@@ -58,7 +61,8 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
       uidOfUser: uid,
       postCreator: username,
       likes:[],
-      time:timeOfPost
+      time:timeOfPost,
+      oldOfPost:howOldIsPost,
     });
   };
   const handleChange = (e) => {

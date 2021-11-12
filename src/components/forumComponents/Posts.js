@@ -44,12 +44,8 @@ export const Posts = () => {
       <>
   {!stateOfModal && (
         <>
-          <section className="section-create-post">
-            
-            
-          </section>
           {posts.map((post, index) => {
-            return (              <ShowPosts  oldOfPost={post.oldOfPost} stateOfEditPostModal={stateOfEditPostModal} time={post.time} likes={post.likes} setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
+            return (              <ShowPosts  oldOfPost={post.oldOfPost} stateOfEditPostModal={stateOfEditPostModal} time={post.time}  setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
             );
           })}
         </>

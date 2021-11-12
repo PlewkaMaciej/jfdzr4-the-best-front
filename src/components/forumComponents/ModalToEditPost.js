@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from "../../index";
 
-export const ModalToEditPost = ({setStateOfEditPostModal,oldOfPost,time, text,likes, title, id, postCreator, uidOfUser}) => {
+export const ModalToEditPost = ({setStateOfEditPostModal,oldOfPost,time, text,title, id, postCreator, uidOfUser}) => {
   
    
  
@@ -53,7 +53,6 @@ export const ModalToEditPost = ({setStateOfEditPostModal,oldOfPost,time, text,li
         text:formData.text,
         postCreator,
         uidOfUser,
-        likes,
         time,
         oldOfPost,
       });

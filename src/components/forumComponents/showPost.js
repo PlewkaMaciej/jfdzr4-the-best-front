@@ -10,9 +10,9 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../index";
 import { ModalToEditPost } from "./ModalToEditPost";
 import { GetLike } from "./GetLike";
+import { AddComment } from "./AddComment";
 export const ShowPosts = ({
   setStateOfEditPostModal,
-  likes,
   stateOfEditPostModal,
   title,
   text,
@@ -37,10 +37,9 @@ export const ShowPosts = ({
       width: "800px",
     },
     typographyTextAboutBook: {
-      marginLeft: "30px",
-      marginRight: "30px",
-      textAlign: "justify",
-      marginTop: "20px",
+      margin:"5%",
+      textAlign: "center",
+      marginTop: "40px",
     },
     typographyTitleAboutBook: {},
     avatar: {
@@ -79,19 +78,19 @@ export const ShowPosts = ({
       position: "relative",
       zIndex: 1,
     },
-    heartForLikes: {
-      width: "40px",
-      height: "40px",
-      color: "red",
+    likesAndCommentContainer:{
+      display:"flex",
+      alignItems:"center",
+      marginTop:"100px"
     },
-    numberOfLikes: {
-      color: "red",
+    blueLine:{
+      height:"2px",
+      background:"#1976d2",
+      position:"relative",
+      top:"120px",
+      opacity:"0.5"
     },
-    heartAndNumbers: {
-      display: "flex",
-      alignItems: "center",
-      marginTop: "150px",
-    },
+  
   });
   const classes = useStyles();
 
@@ -153,14 +152,21 @@ export const ShowPosts = ({
                 {title}
               </Typography>
             </CardContent>
+            
             <Typography
               className={classes.typographyTextAboutBook}
               variant="p"
               component="p"
+              style={{ wordWrap: "break-word" }}
             >
               {text}
             </Typography>
+            
+            <div className={classes.blueLine}></div> 
+            <CardContent className={classes.likesAndCommentContainer}>
             <GetLike id={id}/>
+            <AddComment/>
+            </CardContent>
           </Paper>
         </section>
       )}
@@ -174,7 +180,6 @@ export const ShowPosts = ({
           id={id}
           uidOfUser={uidOfUser}
           postCreator={postCreator}
-          likes={likes}
           oldOfPost={oldOfPost}
         />
       )}

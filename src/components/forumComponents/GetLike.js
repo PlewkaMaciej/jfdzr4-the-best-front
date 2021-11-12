@@ -45,7 +45,6 @@ export const GetLike = (id) => {
     likesAndCounter: {
       display: "flex",
       alignItems: "center",
-      marginTop: "200px",
     },
     heartBorderIcon: {
       color: "red",

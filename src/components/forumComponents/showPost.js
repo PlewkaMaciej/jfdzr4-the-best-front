@@ -3,18 +3,16 @@ import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { UserContext } from "../../controllers/UserContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
-import { doc, deleteDoc, setDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../index";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ModalToEditPost } from "./ModalToEditPost";
+import { GetLike } from "./GetLike";
 export const ShowPosts = ({
   setStateOfEditPostModal,
   likes,
-  idUser,
   stateOfEditPostModal,
   title,
   text,
@@ -25,12 +23,9 @@ export const ShowPosts = ({
   oldOfPost,
   time,
 }) => {
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
   const editPost = () => {
-    setStateOfEditPostModal(id)
-    
+    setStateOfEditPostModal(id);
   };
   const deletePost = () => {
     deleteDoc(doc(db, "posts", id));
@@ -165,11 +160,12 @@ export const ShowPosts = ({
             >
               {text}
             </Typography>
-       
+            <GetLike id={id}/>
           </Paper>
         </section>
       )}
-      {stateOfEditPostModal===id && (
+      
+      {stateOfEditPostModal === id && (
         <ModalToEditPost
           setStateOfEditPostModal={setStateOfEditPostModal}
           time={time}

@@ -37,7 +37,19 @@ export const AddComment = (postId) => {
       display: "flex",
       color: "#1976d2",
       alignItems: "center",
+marginTop:"5px",
     },
+    commentText:{
+        color:"black",
+        position:"relative",
+        right:"50px",
+        marginBottom:"30px",
+    },
+    commentTitle:{
+        color: "#1976d2",
+        position:"relative",
+        right:"70px"
+    }
   });
 
   const classes = useStyles();
@@ -118,15 +130,14 @@ export const AddComment = (postId) => {
                   {allComments[item].map((element ,i) => {
                     return (
                       <>
-                      {console.log( element)}
-                        <div key={i}className={classes.commentsAndUser}>
-                          <Typography variant="h5" component="h5">
+                        {/* <div key={element} className={classes.commentsAndUser}> */}
+                          <Typography className={classes.commentTitle} variant="h5" component="h5">
                             {usernames[index]}: 
                           </Typography>
-                          <Typography variant="p" component="p">
+                          <Typography key={element} style={{ wordWrap: "break-word" }} className={classes.commentText} variant="h5" component="h5">
                             {element}
                           </Typography>
-                        </div>
+                        {/* </div> */}
                       </>
                     );
                   })}

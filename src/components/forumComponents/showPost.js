@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { UserContext } from "../../controllers/UserContext";
-import { useContext, useEffect} from "react";
+import { useContext } from "react";
 import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
 import { doc, deleteDoc } from "firebase/firestore";
@@ -23,7 +23,6 @@ export const ShowPosts = ({
   oldOfPost,
   time,
 }) => {
-  useEffect(() => {}, []);
   const editPost = () => {
     setStateOfEditPostModal(id);
   };
@@ -37,7 +36,7 @@ export const ShowPosts = ({
       width: "800px",
     },
     typographyTextAboutBook: {
-      margin:"5%",
+      margin: "5%",
       textAlign: "center",
       marginTop: "40px",
     },
@@ -67,7 +66,7 @@ export const ShowPosts = ({
       left: "110px",
       color: "white",
     },
-    deleteButton: {},
+
     nicknameAndButton: {
       display: "flex",
       justifyContent: "space-between",
@@ -78,19 +77,21 @@ export const ShowPosts = ({
       position: "relative",
       zIndex: 1,
     },
-    likesAndCommentContainer:{
-      display:"flex",
-      alignItems:"center",
-      marginTop:"100px"
+    likesContainer: {
+      position: "relative",
+      top: "123px",
+    } /*  */,
+    commentsContainer: {
+      position: "relative",
+      left: "65px",
     },
-    blueLine:{
-      height:"2px",
-      background:"#1976d2",
-      position:"relative",
-      top:"120px",
-      opacity:"0.5"
+    blueLine: {
+      height: "2px",
+      background: "#1976d2",
+      position: "relative",
+      top: "120px",
+      opacity: "0.5",
     },
-  
   });
   const classes = useStyles();
 
@@ -152,7 +153,7 @@ export const ShowPosts = ({
                 {title}
               </Typography>
             </CardContent>
-            
+
             <Typography
               className={classes.typographyTextAboutBook}
               variant="p"
@@ -161,16 +162,20 @@ export const ShowPosts = ({
             >
               {text}
             </Typography>
-            
-            <div className={classes.blueLine}></div> 
+
+            <div className={classes.blueLine}></div>
             <CardContent className={classes.likesAndCommentContainer}>
-            <GetLike id={id}/>
-            <AddComment/>
+              <CardContent className={classes.likesContainer}>
+                <GetLike id={id} />
+              </CardContent>
+              <CardContent className={classes.commentsContainer}>
+                <AddComment postId={id} />
+              </CardContent>
             </CardContent>
           </Paper>
         </section>
       )}
-      
+
       {stateOfEditPostModal === id && (
         <ModalToEditPost
           setStateOfEditPostModal={setStateOfEditPostModal}

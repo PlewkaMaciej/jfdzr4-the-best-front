@@ -10,51 +10,68 @@ import { UserContext } from "../../controllers/UserContext";
 import { makeStyles } from "@mui/styles";
 export const Posts = () => {
   const useStyles = makeStyles({
-    createNewPostButton:{
-      position:"fixed",
+    createNewPostButton: {
+      position: "fixed",
       zIndex: 6,
-      left:"100px",
-      width:"250px",
-      height:"70px",
-      marginTop:"30px"
-    }
-  })
+      left: "100px",
+      width: "250px",
+      height: "70px",
+      marginTop: "30px",
+    },
+  });
   const classes = useStyles();
   const [stateOfModal, setStateOfModal] = useState(false);
   const [posts, setPosts] = useState([]);
-  const[state,setState]=useState(false)
+  const [state, setState] = useState(false);
   const [stateOfEditPostModal, setStateOfEditPostModal] = useState(false);
-  const { uid,username,  } =
-  useContext(UserContext)
+  const { uid, username } = useContext(UserContext);
   useEffect(() => {
-    getPosts(setPosts,setState);
-
+    getPosts(setPosts, setState);
   }, []);
-  
+
   const changeStatusOfModal = () => {
     stateOfModal ? setStateOfModal(false) : setStateOfModal(true);
   };
   return (
-    <>{username&&(
-      <Button  className={classes.createNewPostButton} onClick={changeStatusOfModal} variant="contained">
-      Create new post
-    </Button>
-    )}
-    {state&&(
-      <>
-  {!stateOfModal && (
+    <>
+      {username && (
+        <Button
+          className={classes.createNewPostButton}
+          onClick={changeStatusOfModal}
+          variant="contained"
+        >
+          Create new post
+        </Button>
+      )}
+      {state && (
         <>
-          {posts.map((post, index) => {
-            return (              <ShowPosts  oldOfPost={post.oldOfPost} stateOfEditPostModal={stateOfEditPostModal} time={post.time}  setStateOfEditPostModal={setStateOfEditPostModal} setStateOfModal={setStateOfModal} key={index} title={post.title}  text={post.text} id={post.id} idUser={uid} uidOfUser={post.uidOfUser} postCreator={post.postCreator} url={post.url}/>
-            );
-          })}
+          {!stateOfModal && (
+            <>
+              {posts.map((post, index) => {
+                return (
+                  <ShowPosts
+                    oldOfPost={post.oldOfPost}
+                    stateOfEditPostModal={stateOfEditPostModal}
+                    time={post.time}
+                    likes={post.likes}
+                    setStateOfEditPostModal={setStateOfEditPostModal}
+                    setStateOfModal={setStateOfModal}
+                    key={index}
+                    title={post.title}
+                    text={post.text}
+                    id={post.id}
+                    idUser={uid}
+                    uidOfUser={post.uidOfUser}
+                    postCreator={post.postCreator}
+                    url={post.url}
+                  />
+                );
+              })}
+            </>
+          )}
         </>
       )}
-
-    
-      </>
-    )}
-        {stateOfModal &&(
+      {stateOfModal && (
         <>
           <ModalToCreatePost
             setStateOfModal={setStateOfModal}

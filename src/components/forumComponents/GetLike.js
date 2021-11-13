@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from "react";
 import { Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { makeStyles } from "@mui/styles";
-import { fontSize } from "@mui/system";
 import { UserContext } from "../../controllers/UserContext";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../index";
@@ -12,33 +11,36 @@ export const GetLike = (id) => {
   const [isLikes, setIsLiked] = useState(false);
   const [numberOfLikes, setNumberOfLikes] = useState(null);
   const [likesFromFirebase, setLikesFromFirebase] = useState([]);
+  const [state,setState]=useState([])
   const { uid } = useContext(UserContext);
   useEffect(() => {
     getDoc(doc(db, "likes", id.id)).then((doc) => {
-        setNumberOfLikes(doc.data().likes.length)
-        setLikesFromFirebase(doc.data().likes)
+      setNumberOfLikes(doc.data().likes.length);
+      setLikesFromFirebase(doc.data().likes);
       if (doc.data().likes.includes(uid)) {
         setIsLiked(true);
       } else {
         setIsLiked(false);
       }
     });
-  }, [likesFromFirebase]);
+  }, [state]);
   const likePost = () => {
     if (isLikes === false) {
       setDoc(doc(db, "likes", id.id), {
-        likes: [...likesFromFirebase,uid]
-      });
-      setIsLiked(true)
+        likes: [...likesFromFirebase, uid],
+      }).then((doc)=>{
+        setState(doc)
+      })
     } else {
-        let filtredArray=likesFromFirebase.filter((item)=>{
-            if(item!==uid)
-            return item
-        })
-        setIsLiked(false)
-        setDoc(doc(db, "likes", id.id), {
-            likes: filtredArray
-          });
+      let filtredArray = likesFromFirebase.filter((item) => {
+        if (item !== uid) return item;
+      });
+
+      setDoc(doc(db, "likes", id.id), {
+        likes: filtredArray,
+      }).then((doc)=>{
+        setState([])
+      })
     }
   };
   const useStyles = makeStyles({
@@ -81,5 +83,3 @@ export const GetLike = (id) => {
     </>
   );
 };
-
-

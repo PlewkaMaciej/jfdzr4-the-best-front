@@ -69,6 +69,9 @@ export const ModalToCreatePost = ({
       setDoc(doc(db, "likes", document.id), {
         likes: [],
       });
+      setDoc(doc(db, "comments", document.id), {
+        comments:{}
+      });
     });
   };
   const handleChange = (e) => {

@@ -26,17 +26,17 @@ export const getPosts = (setPosts, setState) => {
               ...{ url: url },
             });
             if (querySnapshot.size === postArray.length) {
-              let theNewest = postArray[0];
-              let changer;
-              let indexOfTheNewest = 0;
-              postArray.forEach((post) => {
+
+              postArray.forEach((p,j) => {
+
+
                 postArray.forEach((post, index) => {
-                  if (theNewest.oldOfPost > post.oldOfPost) {
-                    changer = postArray[indexOfTheNewest];
-                    postArray[indexOfTheNewest] = post;
-                    postArray[index] = changer;
-                    indexOfTheNewest = index;
+                  if (post.oldOfPost < p.oldOfPost) {
+                    let changer=postArray[index]
+                      postArray[index]=postArray[j]
+                      postArray[j]=changer
                   }
+                  
                 });
               });
               setPosts(postArray);

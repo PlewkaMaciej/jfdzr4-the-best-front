@@ -3,20 +3,35 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { useState,useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../controllers/UserContext";
 import { Time } from "./Date";
+import { Seconds1970 } from "./SecondsFrom1970";
+import { doc, setDoc } from "firebase/firestore";
 
-export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) => {
+export const ModalToCreatePost = ({
+  setStateOfModal,
+  setStateOfEditPostModal,
+}) => {
   const [timeOfPost, setTimeOfPost] = useState("");
-  useEffect(()=>{
-    setTimeOfPost(Time().toString())
-  })
-  const { uid, username } =
-    useContext(UserContext);
+  const [howOldIsPost, setHowOldIsPost] = useState(null);
+  const getTime=()=>{
+    setTimeOfPost(Time().toString());
+    setHowOldIsPost(Seconds1970());
+  } 
+  useEffect(() => {
+    
+    const unsubscribe= getTime()
+    return ()=>{
+      if(unsubscribe){
+        unsubscribe()
+      }
+    }
+  }, []);
+  const { uid, username } = useContext(UserContext);
   const useStyles = makeStyles({
     paper: {
       position: "absolute",
@@ -57,8 +72,15 @@ export const ModalToCreatePost = ({ setStateOfModal, setStateOfEditPostModal }) 
       text: formData.text,
       uidOfUser: uid,
       postCreator: username,
-      likes:[],
-      time:timeOfPost
+      time: timeOfPost,
+      oldOfPost: howOldIsPost,
+    }).then((document) => {
+      setDoc(doc(db, "likes", document.id), {
+        likes: [],
+      });
+      setDoc(doc(db, "comments", document.id), {
+        comments:{}
+      });
     });
   };
   const handleChange = (e) => {

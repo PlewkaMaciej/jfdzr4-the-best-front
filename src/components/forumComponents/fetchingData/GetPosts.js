@@ -12,12 +12,16 @@ export const getPosts = (setPosts, setState) => {
       snap = getDoc(doc(db, "users", postdoc.data().uidOfUser));
       snap.then((doc) => {
         if (doc.data().isAvatarDefault) {
+          
           postArray.push({
             ...postdoc.data(),
             ...{ id: postdoc.id },
             ...{ url: "defaurlt-avatar.png" },
-          });
+            
+            
+          })      
         } else {
+          
           storageRef = ref(storage, `avatars/${postdoc.data().uidOfUser}/`);
           getDownloadURL(storageRef).then((url) => {
             postArray.push({
@@ -25,8 +29,10 @@ export const getPosts = (setPosts, setState) => {
               ...{ id: postdoc.id },
               ...{ url: url },
             });
-            if (querySnapshot.size === postArray.length) {
-
+            
+          });
+        }
+        if(postArray.length===querySnapshot.size){
               postArray.forEach((p,j) => {
 
 
@@ -39,11 +45,10 @@ export const getPosts = (setPosts, setState) => {
                   
                 });
               });
-              setPosts(postArray);
-              setState(true);
-            }
-          });
+          setPosts(postArray);
+          setState(true);
         }
+      
       });
     });
   });

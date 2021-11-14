@@ -27,6 +27,7 @@ export const Posts = () => {
   const { uid, username } = useContext(UserContext);
   useEffect(() => {
     getPosts(setPosts, setState);
+
   }, []);
 
   const changeStatusOfModal = () => {
@@ -43,8 +44,10 @@ export const Posts = () => {
           Create new post
         </Button>
       )}
+      
       {state && (
         <>
+
           {!stateOfModal && (
             <>
               {posts.map((post, index) => {

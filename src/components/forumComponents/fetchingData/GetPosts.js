@@ -9,9 +9,12 @@ export const getPosts = (setPosts, setState) => {
     let snap;
     setState(false);
     querySnapshot.forEach((postdoc) => {
+      console.log(postArray)
       snap = getDoc(doc(db, "users", postdoc.data().uidOfUser));
       snap.then((doc) => {
         if (doc.data().isAvatarDefault) {
+          console.log("xd")
+          console.log(postdoc.data())
           postArray.push({
             ...postdoc.data(),
             ...{ id: postdoc.id },
@@ -39,6 +42,7 @@ export const getPosts = (setPosts, setState) => {
                   
                 });
               });
+          
               setPosts(postArray);
               setState(true);
             }

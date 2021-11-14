@@ -8,7 +8,6 @@ import { db } from "../../index";
 import { useState, useContext, useRef, useEffect } from "react";
 import { UserContext } from "../../controllers/UserContext";
 import Typography from "@mui/material/Typography";
-
 export const AddComment = (postId) => {
   const useStyles = makeStyles({
     commentContainer: {
@@ -37,54 +36,63 @@ export const AddComment = (postId) => {
       display: "flex",
       color: "#1976d2",
       alignItems: "center",
-marginTop:"5px",
+      marginTop: "5px",
     },
-    commentText:{
-        color:"black",
-        position:"relative",
-        right:"50px",
-        marginBottom:"30px",
+    commentText: {
+      color: "black",
+      position: "relative",
+      right: "50px",
+      marginBottom: "30px",
     },
-    commentTitle:{
-        color: "#1976d2",
-        position:"relative",
-        right:"70px"
-    }
+    commentTitle: {
+      color: "#1976d2",
+      position: "relative",
+      right: "70px",
+    },
   });
 
   const classes = useStyles();
-  const { uid, username } = useContext(UserContext);
+  const { uid } = useContext(UserContext);
   const inputEl = useRef(null);
   const [commentContent, setcommentContent] = useState("");
   const [showComment, setShowComment] = useState(false);
   const [allComments, setAllComments] = useState("");
   const [usernames, setUsernames] = useState([]);
+  const [state, setState] = useState(null);
   useEffect(() => {
-      let usersArray=[]
+    let usersArray = [];
     getDoc(doc(db, "comments", postId.postId)).then((document) => {
       setAllComments(document.data().comments);
       Object.keys(document.data().comments).forEach((element) => {
-        getDoc(doc(db, "users", element)).then((document) => {
-            usersArray.push(document.data().username)
-        }).then(()=>{
-            setUsernames(usersArray)
-        })
+        getDoc(doc(db, "users", element))
+          .then((document) => {
+            usersArray.push(document.data().username);
+          })
+          .then(() => {
+            setUsernames(usersArray);
+          });
       });
     });
-  }, []);
+  }, [state]);
   const addComment = () => {
     let commentArray;
     if (commentContent !== "") {
       getDoc(doc(db, "comments", postId.postId))
         .then((document) => {
           commentArray = document.data().comments;
-          commentArray[uid].push(commentContent);
+          if (commentArray[uid] === undefined) {
+            commentArray[uid] = [];
+            commentArray[uid].push(commentContent);
+          } else {
+            commentArray[uid].push(commentContent);
+          }
         })
         .then(() => {
           setDoc(doc(db, "comments", postId.postId), {
             comments: commentArray,
           }).then(() => {
             setcommentContent("");
+            setState(commentArray)
           });
         });
     }
@@ -122,27 +130,39 @@ marginTop:"5px",
         <>
           <CardContent>
             {Object.keys(allComments).map((item, index) => {
-             
               return (
-                <div key={item.toString()+index.toString()}>
-                <>
-                  {" "}
-                  {allComments[item].map((element ,i) => {
-                    return (
-                      <>
-                        {/* <div key={element} className={classes.commentsAndUser}> */}
-                          <Typography className={classes.commentTitle} variant="h5" component="h5">
-                            {usernames[index]}: 
-                          </Typography>
-                          <Typography key={element} style={{ wordWrap: "break-word" }} className={classes.commentText} variant="h5" component="h5">
-                            {element}
-                          </Typography>
-                        {/* </div> */}
-                      </>
-                    );
-                  })}
-                </>
-                </div> );
+                <div key={item.toString() + index.toString() + "first"}>
+                  <>
+                    {" "}
+                    {allComments[item].map((element, i) => {
+                      return (
+                        
+                          <div
+                            key={i.toString() + element.toString()}
+                            className={classes.commentsAndUser}
+                          >
+                            <Typography
+                              className={classes.commentTitle}
+                              variant="h5"
+                              component="h5"
+                            >
+                              {usernames[index]}:
+                            </Typography>
+                            <Typography
+                              style={{ wordWrap: "break-word" }}
+                              className={classes.commentText}
+                              variant="h5"
+                              component="h5"
+                            >
+                              {element}
+                            </Typography>
+                          </div>
+                        
+                      );
+                    })}
+                  </>
+                </div>
+              );
             })}
           </CardContent>
         </>

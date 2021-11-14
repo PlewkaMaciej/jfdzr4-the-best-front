@@ -18,9 +18,18 @@ export const ModalToCreatePost = ({
 }) => {
   const [timeOfPost, setTimeOfPost] = useState("");
   const [howOldIsPost, setHowOldIsPost] = useState(null);
-  useEffect(() => {
+  const getTime=()=>{
     setTimeOfPost(Time().toString());
     setHowOldIsPost(Seconds1970());
+  } 
+  useEffect(() => {
+    
+    const unsubscribe= getTime()
+    return ()=>{
+      if(unsubscribe){
+        unsubscribe()
+      }
+    }
   }, []);
   const { uid, username } = useContext(UserContext);
   const useStyles = makeStyles({

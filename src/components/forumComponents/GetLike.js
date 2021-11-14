@@ -33,7 +33,7 @@ export const GetLike = (id) => {
       })
     } else {
       let filtredArray = likesFromFirebase.filter((item) => {
-        if (item !== uid) {return item}
+        if (item !== uid) return item;
       });
 
       setDoc(doc(db, "likes", id.id), {

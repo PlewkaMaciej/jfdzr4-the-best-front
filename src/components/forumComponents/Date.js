@@ -6,11 +6,10 @@ function addZero(i) {
   }
 export const Time = () => {
   let today = new Date();
-  let month = today.getMonth();
+  let month = today.getMonth()+1;
   let year = today.getFullYear();
-  let day = addZero(today.getDay());
   let hour = addZero(today.getHours());
   let minutes = addZero(today.getMinutes());
   let seconds = addZero(today.getSeconds());
-  return year + "." + month + "." + day + " " + hour + ":" + minutes + ":" + seconds;
+  return year + "." + month +  "." + "14 " +  + hour + ":" + minutes + ":" + seconds;
 };

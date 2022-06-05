@@ -30,9 +30,8 @@ export const getPosts = (setPosts, setState) => {
               ...{ url: url },
             });
             
-          });
-        }
-        if(postArray.length===querySnapshot.size){
+          }).then(()=>{
+            if(postArray.length===querySnapshot.size){
               postArray.forEach((p,j) => {
 
 
@@ -48,6 +47,9 @@ export const getPosts = (setPosts, setState) => {
           setPosts(postArray);
           setState(true);
         }
+          })
+        }
+       
       
       });
     });
